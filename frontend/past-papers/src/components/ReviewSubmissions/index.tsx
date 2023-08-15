@@ -1,4 +1,5 @@
 import PdfViewer from "./PdfViewer";
+import ReviewForm from "./ReviewForm";
 
 export default function ReviewSubmissions() {
 
@@ -6,7 +7,10 @@ export default function ReviewSubmissions() {
 
     return (
         <>
-            <PdfViewer url={url}/>
+            <div className="lg:flex lg:gap-20 lg:justify-end ">
+            <ReviewForm />
+            <PdfViewer pdfUrl={url}/>
+            </div>
         </>
     )
 }

@@ -1,6 +1,6 @@
 # cui-past-papers
 
-## Frontend
+## Getting Started Frontend
 
 ### Before Beginning below steps, Install Node js 18
 
@@ -11,3 +11,48 @@ For first time setup of the frontend run
 Then everytime you need to run server use
 
 `npm run dev`
+
+## Getting Started Backend
+
+### prerequists: python 3.11, pip, pipenv
+
+### Install dependencies & activate virtualenv
+
+
+#### changing directiory to the root backend
+```bash
+cd backend
+```
+
+#### Running the virtualenv using pipenv 
+
+```bash
+pipenv shell
+```
+
+#### Install dependencies
+
+```bash
+pipenv install 
+```
+
+### Running the server
+
+```bash
+python manage.py runserver
+```
+
+
+## Additional steps - May be required
+
+### Apply migrations (Optional)
+
+```bash
+python manage.py migrate
+```
+
+### Collect static files (only on a production server)
+
+```bash
+python manage.py collectstatic
+```

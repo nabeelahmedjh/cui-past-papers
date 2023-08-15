@@ -1,12 +1,16 @@
 from rest_framework import serializers
-from .models import Contribution
+from .models import Contributor, Submission
 
-class ContributionSerializer(serializers.ModelSerializer):
+
+
+class SubmissionSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Contribution
+        model = Submission
         fields = '__all__'
-        extra_kwargs = {
-            'file': {
-                'write_only': True
-            }
-        }
+
+class ContributorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Contributor
+        fields = '__all__'
+    
+    

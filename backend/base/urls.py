@@ -7,6 +7,6 @@ urlpatterns = [
     path('past-papers/',views.PaperPaperView.as_view(), name='past-papers'),
 
 
-    path('contributions/', views.ContributionsView.as_view(), name='contributions')
+    path('contributors/', views.ContributorView.as_view(), name='contributors')
     # path('submissions/',views.ContributionsView.as_view(), name='submissions')
 ]

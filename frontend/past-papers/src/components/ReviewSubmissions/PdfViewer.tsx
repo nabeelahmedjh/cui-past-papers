@@ -1,17 +1,20 @@
-
+import objSrc from "../../assets/essay.pdf"
 
 interface PdfViewerProps  {
-    url: string
+    pdfUrl: string
 }
 
-export default function PdfViewer({url} : PdfViewerProps ) {
+export default function PdfViewer({pdfUrl} : PdfViewerProps ) {
 
 
-    const src: string = `https://docs.google.com/viewer?url=${url}&embedded=true`
+    const src: string = `https://docs.google.com/viewer?url=${pdfUrl}&embedded=true`
     return (
-        <div className="lg:flex lg:gap-20 lg:justify-end lg:mr-8 lg:my-8">
-            <h1 className="text-4xl mb-4 lg:mb-0 ">FORM</h1>
-            <iframe src={src} className="w-full lg:w-1/2 h-[30rem] lg:h-[60rem] border-4"  />
+        <div className="lg:mr-8 lg:mb-8 w-full lg:w-1/2">
+            <object data={objSrc} type="application/pdf" className="w-full  h-[35rem] lg:h-[60rem] border-4">
+                <div className="flex justify-center pb-1"><a href={pdfUrl} className=" text-xl ">Download PDF</a></div>
+            <embed src={src} className="w-full h-[33rem] lg:h-[60rem]" />
+            </object>
         </div>
     )
 }
+

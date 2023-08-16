@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from rest_framework.validators import UniqueValidator
 from .models import Contributor, Submission, PastPapar
 
 
@@ -10,6 +11,14 @@ class SubmissionSerializer(serializers.ModelSerializer):
 
 
 class ContributorSerializer(serializers.ModelSerializer):
+
+
+    # name = serializers.CharField(
+    #     validators=[
+    #         UniqueValidator(queryset=Contributor.objects.all())
+    #     ]
+    # )
+
     class Meta:
         model = Contributor
         fields = '__all__'
@@ -19,6 +28,18 @@ class ContributorSerializer(serializers.ModelSerializer):
                 'required': True
             }
         }
+
+
+    def validate_name(self, value):
+        modified_value = value.lower()
+        contributor_exists = Contributor.objects.filter(modified_value=value).exists()
+
+        if contributor_exists:
+            raise serializers.ValidationError("This name is already in use.")
+
+        return modified_value
+    
+
 
 class PastPaperSerializer(serializers.ModelSerializer):
 

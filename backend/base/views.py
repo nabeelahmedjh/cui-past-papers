@@ -43,7 +43,19 @@ class SubmissionDetailView(APIView):
 
 
     def delete(self, request, pk):
-        pass
+
+
+        try:
+            submission = Submission.objects.get(id=pk)
+
+            submission.delete()
+            return Response({
+                'message': 'Past paper deleted successfully'
+            }, status=status.HTTP_200_OK)
+        except Submission.DoesNotExist:
+             return Response({
+                'message': "Past paper doesn't exists"
+            }, status=status.HTTP_404_NOT_FOUND)
 
 
 
@@ -55,7 +67,7 @@ class PaperPaperView(APIView):
         # submission = Submission.objects.filter(name=request.data.get('submitted_by', ''))
 
         
-        contributor = Contributor.objects.filter(name=request.data.get('submitted_by', ''))
+        contributor = Contributor.objects.filter(name__iexact=request.data.get('submitted_by', ''))
 
         if not contributor.exists():
 
@@ -74,7 +86,7 @@ class PaperPaperView(APIView):
                 return Response(response)
         
 
-        contributor = Contributor.objects.get(name=request.data.get('submitted_by'))
+        contributor = Contributor.objects.get(name__iexact=request.data.get('submitted_by'))
         print(contributor.id)
         request.data['submitted_by'] = contributor.id
 
@@ -83,9 +95,11 @@ class PaperPaperView(APIView):
 
         if serializer.is_valid():
             serializer.save()
+
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
+
 
     def get(self, request):
         pastpapers = PastPapar.objects.all()

@@ -32,7 +32,7 @@ class ContributorSerializer(serializers.ModelSerializer):
 
     def validate_name(self, value):
         modified_value = value.lower()
-        contributor_exists = Contributor.objects.filter(modified_value=value).exists()
+        contributor_exists = Contributor.objects.filter(name__iexact=value).exists()
 
         if contributor_exists:
             raise serializers.ValidationError("This name is already in use.")
@@ -52,3 +52,8 @@ class PastPaperSerializer(serializers.ModelSerializer):
                 'required': True
             }
         }
+
+
+    # def validate_submitted_by(self, value):
+    #     contributor = Contributor.objects.get(name__iexact=value)
+    #     return contributor.id

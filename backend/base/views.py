@@ -18,13 +18,12 @@ from .serializers import ContributorSerializer, SubmissionSerializer, PastPaperS
 class SubmissionView(APIView):
 
 
-
-
     def get(self, request):
         submissions = Submission.objects.all()
 
         serializer = SubmissionSerializer(submissions, many=True)
         return Response(serializer.data)
+
 
 
     def post(self, request):
@@ -34,8 +33,6 @@ class SubmissionView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.error, status=status.HTTP_400_BAD_REQUEST)
-    
-
     
 
 
@@ -91,7 +88,9 @@ class PaperPaperView(APIView):
         request.data['submitted_by'] = contributor.id
 
 
-        serializer = PastPaperSerializer(data=request.data)
+        serializer = PastPaperSerializer(data=request.data, context={
+            'request': requests
+        })
 
         if serializer.is_valid():
             serializer.save()

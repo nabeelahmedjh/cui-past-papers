@@ -12,7 +12,9 @@ export default function ReviewSubmissions() {
     async function fetchData() {
       const submissions = await getSubmissions();
       if (submissions) {
-        console.log(submissions[0]);
+        submissions.forEach((submission: string) => {
+          console.log(submission);
+        });
         setPdfPath(submissions[0].file);
         // Do something with the submissions data
       }

@@ -1,8 +1,6 @@
-test
-
 # cui-past-papers
 
-## Getting Started Frontend
+# Getting Started Frontend
 
 ### Before Beginning below steps, Install Node js 18
 
@@ -14,7 +12,11 @@ Then everytime you need to run server use
 
 `npm run dev`
 
-## Getting Started Backend
+<br>
+<br>
+
+
+# Getting Started Backend
 
 ### prerequists: python 3.11, pip, pipenv
 
@@ -38,19 +40,32 @@ pipenv shell
 pipenv install
 ```
 
+### Apply migrations (First time only)
+
+```bash
+python manage.py migrate
+```
+
 ### Running the server
 
 ```bash
 python manage.py runserver
 ```
 
-## Additional steps - May be required
-
-### Apply migrations (Optional)
+### Note: YOU NEED TO CREATE A SUPER USER TO ACCESS THE ADMIN PANEL
+#### for creating a super user
 
 ```bash
-python manage.py migrate
+python manage.py createsuperuser
 ```
+
+
+
+
+<br>
+<br>
+
+## Additional steps - May be required
 
 ### Collect static files (only on a production server)
 

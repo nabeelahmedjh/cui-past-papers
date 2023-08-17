@@ -1,3 +1,5 @@
+test
+
 # cui-past-papers
 
 ## Getting Started Frontend
@@ -18,13 +20,13 @@ Then everytime you need to run server use
 
 ### Install dependencies & activate virtualenv
 
-
 #### changing directiory to the root backend
+
 ```bash
 cd backend
 ```
 
-#### Running the virtualenv using pipenv 
+#### Running the virtualenv using pipenv
 
 ```bash
 pipenv shell
@@ -33,7 +35,7 @@ pipenv shell
 #### Install dependencies
 
 ```bash
-pipenv install 
+pipenv install
 ```
 
 ### Running the server
@@ -41,7 +43,6 @@ pipenv install
 ```bash
 python manage.py runserver
 ```
-
 
 ## Additional steps - May be required
 

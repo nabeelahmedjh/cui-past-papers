@@ -1,7 +1,8 @@
 
+
+# Ignoring Backend local config and dependencies
 *.pyc
 /media
-backend/db.sqlite3
 __pycache__/
 *.egg-info/
 .vscode/
@@ -9,6 +10,7 @@ __pycache__/
 *.pyc
 *.pyo
 *.swp
+
 backend/Pipfile.lock
 backend/db.sqlite3
 backend/media/

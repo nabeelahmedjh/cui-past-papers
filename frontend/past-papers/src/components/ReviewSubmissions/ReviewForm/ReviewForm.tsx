@@ -1,7 +1,5 @@
 import { reviewFormSchema } from "./reviewFormSchema";
 
-import getSubmissions from "./getSubmissions";
-
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -27,8 +25,6 @@ import {
 ////////////////////////////////////////
 
 export default function ReviewForm() {
-  getSubmissions();
-
   const form = useForm<z.infer<typeof reviewFormSchema>>({
     resolver: zodResolver(reviewFormSchema),
     defaultValues: {

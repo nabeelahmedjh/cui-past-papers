@@ -9,6 +9,6 @@ __pycache__/
 *.pyc
 *.pyo
 *.swp
-/backend/Pipfile.lock
-*.sqlite3
+backend/Pipfile.lock
+backend/db.sqlite3
 backend/media/

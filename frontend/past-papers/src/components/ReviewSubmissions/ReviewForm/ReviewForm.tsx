@@ -54,8 +54,8 @@ export default function ReviewForm() {
   }
 
   return (
-    <div className="lg:w-1/2 w-full">
-      <div className=" sm:w-1/2 sm:mx-auto my-12 mx-4">
+    <div className="lg:w-[60%] w-full">
+      <div className=" sm:w-1/2 sm:mx-auto my-12 mx-2">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <FormField

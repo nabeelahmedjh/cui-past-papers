@@ -31,8 +31,6 @@ export default function ReviewForm() {
       courseCode: "",
       courseInstructor: "",
       courseTitle: "",
-      campus: "",
-      examType: "",
     },
   });
 
@@ -46,6 +44,13 @@ export default function ReviewForm() {
         campus: "${values.campus}",
         examType: "${values.examType}",
     }`);
+    form.reset({
+      courseCode: "",
+      courseInstructor: "",
+      courseTitle: "",
+      campus: values.campus,
+      examType: values.examType,
+    });
   }
 
   return (

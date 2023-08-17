@@ -1,2 +1,14 @@
 
 *.pyc
+/media
+backend/db.sqlite3
+__pycache__/
+*.egg-info/
+.vscode/
+.idea/
+*.pyc
+*.pyo
+*.swp
+backend/Pipfile.lock
+backend/db.sqlite3
+backend/media/

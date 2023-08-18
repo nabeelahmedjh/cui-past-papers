@@ -1,34 +1,123 @@
 import AdobePdf from "./ReviewForm/AdobePdf";
 import ReviewForm from "./ReviewForm/ReviewForm";
-import getSubmissions from "./getSubmissions";
-
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 export default function ReviewSubmissions() {
-  const [pdfPath, setPdfPath] = useState<string>("");
-  const pdfUrl: string = `http://localhost:8000${pdfPath}`;
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [submissions, setSubmissions] = useState<any[]>([]);
+  const [displayedSubmissionIndex, setDisplayedSubmissionIndex] =
+    useState<number>(0);
+
+  const pdfUrl: string = `http://localhost:8000${
+    submissions[displayedSubmissionIndex]?.file || ""
+  }`;
+
+  axios.defaults.baseURL = "http://localhost:8000/api";
+
   useEffect(() => {
-    async function fetchData() {
-      const submissions = await getSubmissions();
-      if (submissions) {
-        submissions.forEach((submission: string) => {
-          console.log(submission);
-        });
-        setPdfPath(submissions[0].file);
-        // Do something with the submissions data
+    fetchSubmissions();
+  }, []);
+
+  useEffect(() => {
+    if (submissions.length > 0) {
+      setDisplayedSubmissionIndex(0);
+    }
+  }, [submissions]);
+
+  const fetchSubmissions = async () => {
+    try {
+      const response = await axios.get("/submissions/");
+      const data = response.data;
+      setSubmissions(data);
+    } catch (error) {
+      console.error("Error fetching submissions:", error);
+    }
+    setIsLoading(false);
+  };
+
+  const delSubmission = async () => {
+    if (submissions.length > 0) {
+      const submissionId = submissions[displayedSubmissionIndex]?.id;
+      if (submissionId) {
+        try {
+          console.log(`Submission with ID ${submissionId} declined`);
+
+          const response = await axios.delete(`/submissions/${submissionId}`);
+          if (response.status === 204) {
+            console.log(
+              `Submission with ID ${submissionId} deleted successfully`
+            );
+          } else {
+            console.error(
+              `Failed to delete submission with ID ${submissionId}`
+            );
+          }
+        } catch (error) {
+          console.error(
+            `Error declining or deleting submission with ID ${submissionId}:`,
+            error
+          );
+        }
       }
     }
+  };
 
-    fetchData();
-  }, []);
+  const handleDeclineAndDelete = async () => {
+    await delSubmission();
+    fetchSubmissions();
+  };
+
+  const handleNext = async (formData) => {
+    if (submissions.length > 0) {
+      const submissionId = submissions[displayedSubmissionIndex]?.id;
+      if (submissionId) {
+        try {
+          console.log("Form data:", formData);
+
+          const response = await axios.post("/past-papers/", formData);
+          if (response.status >= 200 && response.status < 300) {
+            console.log("Form submitted successfully");
+            await delSubmission();
+            fetchSubmissions();
+          } else {
+            console.error(
+              "Form submission failed with status:",
+              response.status
+            );
+          }
+        } catch (error) {
+          console.error("Form submission failed:", error);
+        }
+      }
+    }
+  };
+
+  if (isLoading) {
+    return <h1 className="text-4xl ml-[42%]">Loading...</h1>;
+  }
 
   return (
     <>
-      <div className="lg:flex lg:gap-5 lg:justify-end ">
-        <ReviewForm />
-        {pdfPath && <AdobePdf url={pdfUrl} />}
-      </div>
+      {!isLoading && (
+        <div className="lg:flex lg:gap-5 lg:justify-end">
+          {submissions.length > 0 ? (
+            <>
+              {pdfUrl && (
+                <ReviewForm
+                  handleNext={handleNext}
+                  handleDeclineAndDelete={handleDeclineAndDelete}
+                />
+              )}
+              {pdfUrl && <AdobePdf url={pdfUrl} />}
+            </>
+          ) : (
+            <h1 className="text-2xl mr-[42%] mt-[5%]">
+              No submissions left to review
+            </h1>
+          )}
+        </div>
+      )}
     </>
   );
 }

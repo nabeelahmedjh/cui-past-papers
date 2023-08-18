@@ -24,7 +24,7 @@ import {
 } from "@/components/ui/select";
 ////////////////////////////////////////
 
-export default function ReviewForm() {
+export default function ReviewForm({ handleNext, handleDeclineAndDelete }) {
   const form = useForm<z.infer<typeof reviewFormSchema>>({
     resolver: zodResolver(reviewFormSchema),
     defaultValues: {
@@ -35,15 +35,16 @@ export default function ReviewForm() {
   });
 
   function onSubmit(values: z.infer<typeof reviewFormSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    alert(`{
-        course_code: "${values.course_code.toUpperCase()}",
-        instructor_name: "${values.instructor_name}",
-        course_title: "${values.course_title}",
-        campus: "${values.campus}",
-        exam_type: "${values.exam_type}",
-    }`);
+    const formData = {
+      course_code: values.course_code,
+      course_title: values.course_title,
+      instructor_name: values.instructor_name,
+      campus: values.campus,
+      exam_type: values.exam_type,
+      submitted_by: "dummy, submitted_by change this in the future",
+      linkedIn: "https://www.dummmylinkedin.com/changelater",
+    };
+    handleNext(formData);
     form.reset({
       course_code: "",
       instructor_name: "",
@@ -181,7 +182,7 @@ export default function ReviewForm() {
               <Button
                 type="button"
                 variant={"destructive"}
-                onClick={() => alert("Request Declined")}
+                onClick={handleDeclineAndDelete}
               >
                 Decline
               </Button>

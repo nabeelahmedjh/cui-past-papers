@@ -76,9 +76,10 @@ export default function ReviewSubmissions() {
           console.log("Form data:", formData);
 
           const response = await axios.post("/past-papers/", formData);
+          console.log(response.data);
           if (response.status >= 200 && response.status < 300) {
             console.log("Form submitted successfully");
-            await delSubmission();
+            // await delSubmission();
             fetchSubmissions();
           } else {
             console.error(
@@ -87,7 +88,7 @@ export default function ReviewSubmissions() {
             );
           }
         } catch (error) {
-          console.error("Form submission failed:", error);
+          console.log("Form submission failed:", error.response.data);
         }
       }
     }
@@ -105,6 +106,8 @@ export default function ReviewSubmissions() {
             <>
               {pdfUrl && (
                 <ReviewForm
+                  pdfPath={submissions[displayedSubmissionIndex]?.file || ""}
+                  submissionId={submissions[displayedSubmissionIndex]?.id}
                   handleNext={handleNext}
                   handleDeclineAndDelete={handleDeclineAndDelete}
                 />

@@ -24,7 +24,12 @@ import {
 } from "@/components/ui/select";
 ////////////////////////////////////////
 
-export default function ReviewForm({ handleNext, handleDeclineAndDelete }) {
+export default function ReviewForm({
+  handleNext,
+  handleDeclineAndDelete,
+  submissionId,
+  pdfPath,
+}) {
   const form = useForm<z.infer<typeof reviewFormSchema>>({
     resolver: zodResolver(reviewFormSchema),
     defaultValues: {
@@ -41,8 +46,8 @@ export default function ReviewForm({ handleNext, handleDeclineAndDelete }) {
       instructor_name: values.instructor_name,
       campus: values.campus,
       exam_type: values.exam_type,
-      submitted_by: "dummy, submitted_by change this in the future",
-      linkedIn: "https://www.dummmylinkedin.com/changelater",
+      submission_id: submissionId,
+      file: pdfPath,
     };
     handleNext(formData);
     form.reset({

@@ -4,7 +4,8 @@ from django.db import models
 class Submission(models.Model):
     name = models.CharField(max_length=255)
     file = models.FileField(upload_to='raw_pdfs/')
-    linkedIn = models.URLField(default='')
+    email = models.EmailField()
+    linkedIn = models.URLField()
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
 
@@ -14,7 +15,8 @@ class Submission(models.Model):
 
 class Contributor(models.Model):
     name = models.CharField(max_length=255)
-    linkedIn = models.URLField(default='')
+    email = models.EmailField()
+    linkedIn = models.URLField()
 
 
     def __str__(self) -> str:
@@ -45,6 +47,6 @@ class PastPapar(models.Model):
     campus = models.CharField(max_length=55, choices=campus_choices)
     uploaded_at = models.DateTimeField(auto_now_add=True)
     exam_type = models.CharField(max_length=1, choices=exam_type_choices)
-    # file = models.FileField(upload_to='pastpapers/')
+    file = models.FileField(upload_to='pastpapers/')
     submitted_by = models.ForeignKey(Contributor, on_delete=models.SET_NULL, null=True)
 

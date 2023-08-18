@@ -28,9 +28,9 @@ export default function ReviewForm() {
   const form = useForm<z.infer<typeof reviewFormSchema>>({
     resolver: zodResolver(reviewFormSchema),
     defaultValues: {
-      courseCode: "",
-      courseInstructor: "",
-      courseTitle: "",
+      course_code: "",
+      instructor_name: "",
+      course_title: "",
     },
   });
 
@@ -38,18 +38,18 @@ export default function ReviewForm() {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     alert(`{
-        courseCode: "${values.courseCode.toUpperCase()}",
-        courseInstructor: "${values.courseInstructor}",
-        courseTitle: "${values.courseTitle}",
+        course_code: "${values.course_code.toUpperCase()}",
+        instructor_name: "${values.instructor_name}",
+        course_title: "${values.course_title}",
         campus: "${values.campus}",
-        examType: "${values.examType}",
+        exam_type: "${values.exam_type}",
     }`);
     form.reset({
-      courseCode: "",
-      courseInstructor: "",
-      courseTitle: "",
+      course_code: "",
+      instructor_name: "",
+      course_title: "",
       campus: values.campus,
-      examType: values.examType,
+      exam_type: values.exam_type,
     });
   }
 
@@ -60,7 +60,7 @@ export default function ReviewForm() {
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <FormField
               control={form.control}
-              name="courseCode"
+              name="course_code"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Course Code</FormLabel>
@@ -77,7 +77,7 @@ export default function ReviewForm() {
 
             <FormField
               control={form.control}
-              name="courseInstructor"
+              name="instructor_name"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Course Instructor</FormLabel>
@@ -94,7 +94,7 @@ export default function ReviewForm() {
 
             <FormField
               control={form.control}
-              name="courseTitle"
+              name="course_title"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Course Title</FormLabel>
@@ -148,7 +148,7 @@ export default function ReviewForm() {
 
             <FormField
               control={form.control}
-              name="examType"
+              name="exam_type"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Exam Type</FormLabel>

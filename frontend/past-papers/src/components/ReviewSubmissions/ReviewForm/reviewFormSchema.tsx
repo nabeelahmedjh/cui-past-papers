@@ -1,10 +1,10 @@
 import * as z from "zod";
 
 export const reviewFormSchema = z.object({
-  courseCode: z
+  course_code: z
     .string()
     .regex(/^[a-zA-Z]{3}\d{3}$/, "Value should be in the format ABC123"),
-  courseInstructor: z
+  instructor_name: z
     .string()
     .min(3, {
       message: "Instructor name should be more than 3 characters long.",
@@ -12,7 +12,7 @@ export const reviewFormSchema = z.object({
     .max(50, {
       message: "Instructor name should be less than 50 characters long.",
     }),
-  courseTitle: z
+  course_title: z
     .string()
     .min(3, {
       message: "Course title should be more than 3 characters long.",
@@ -23,7 +23,7 @@ export const reviewFormSchema = z.object({
   campus: z.string({
     required_error: "Please select a campus.",
   }),
-  examType: z.string({
+  exam_type: z.string({
     required_error: "Please select an exam type.",
   }),
 });

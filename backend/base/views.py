@@ -12,6 +12,9 @@ from rest_framework.views import APIView
 from .models import Contributor, PastPapar, Submission
 from .serializers import ContributorSerializer, SubmissionSerializer, PastPaperSerializer
 
+
+from .helpers.utils import createContributor, deleteSubmission
+
 # Create your views here.
 
 
@@ -27,6 +30,7 @@ class SubmissionView(APIView):
 
 
     def post(self, request):
+        
         serializer = SubmissionSerializer(data=request.data)
 
         if serializer.is_valid():
@@ -42,72 +46,15 @@ class SubmissionDetailView(APIView):
     def delete(self, request, pk):
 
 
-        try:
-            submission = Submission.objects.get(id=pk)
+        response = deleteSubmission(pk)
 
-            submission.delete()
-            return Response({
-                'message': 'Past paper deleted successfully'
-            }, status=status.HTTP_200_OK)
-        except Submission.DoesNotExist:
-             return Response({
-                'message': "Past paper doesn't exists"
-            }, status=status.HTTP_404_NOT_FOUND)
+        return Response(response[0], status=response[1])
 
-
-
-class PaperPaperView(APIView):
-
-
-    def post(self, request):
-        # for creating a contributor first
-        # submission = Submission.objects.filter(name=request.data.get('submitted_by', ''))
-
-        
-        contributor = Contributor.objects.filter(name__iexact=request.data.get('submitted_by', ''))
-
-        if not contributor.exists():
-
-            # Retrieve the relative URL using the name and prepend the scheme
-            url = request.build_absolute_uri(reverse('contributors'))
-            
-            response = requests.post(url, data={
-                'name': request.data.get('submitted_by'),
-                'linkedIn': request.data.get('linkedIn')
-            })
-
-            if response.status_code == 400:
-
-                # response_decoded = response.content.decode('utf-8')
-
-                return Response(response)
-        
-
-        contributor = Contributor.objects.get(name__iexact=request.data.get('submitted_by'))
-        print(contributor.id)
-        request.data['submitted_by'] = contributor.id
-
-
-        serializer = PastPaperSerializer(data=request.data, context={
-            'request': requests
-        })
-
-        if serializer.is_valid():
-            serializer.save()
-
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-
-
-    def get(self, request):
-        pastpapers = PastPapar.objects.all()
-
-        serializer = PastPaperSerializer(pastpapers, many=True)
-        return Response(serializer.data)
 
 
 class ContributorView(APIView):
+
+
 
     def get(self, request):
         contributors = Contributor.objects.all()
@@ -118,9 +65,97 @@ class ContributorView(APIView):
 
     def post(self, request):
 
+        response = createContributor(data=request.data)
         serializer = ContributorSerializer(data=request.data)
+
+        return Response(response[0], status=response[1])
+
+
+
+class PaperPaperView(APIView):
+
+
+    def post(self, request):
+
+
+
+
+        # try:
+        #     submission = Submission.objects.get(id=request.data.get('submitted_by', None))
+        
+        # except Submission.DoesNotExist:
+        #     return Response({
+        #         'submiited_by': [
+        #             "Not provided or not valid"
+        #         ]
+        #     }, status=status.HTTP_400_BAD_REQUEST)
+    
+
+        # try:
+        #     contributor = Contributor.objects.get(email=submission.email)
+
+        # except Contributor.DoesNotExist:
+
+        #     url = request.build_absolute_uri(reverse('contributors'))
+        #     # Retrieve the relative URL using the name and prepend the scheme
+        #     response = createContributor(url, submission)
+            
+        #     if response.status_code == 400:
+
+        #         return Response(response, status=status.HTTP_400_BAD_REQUEST)
+            
+        
+        # contributor = Contributor.objects.get(email=submission.email)
+        # print(contributor.id)
+        
+        # request.data._mutable = True
+        # request.data['submitted_by'] = contributor.id
+        try:
+            submission = Submission.objects.get(id=request.data.get('submission_id', ''))
+        except Submission.DoesNotExist:
+            return Response({
+                'message': "submission_id is not given or is not valid"
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+        
+        try:
+            contributor = Contributor.objects.get(email=submission.email)
+
+        except Contributor.DoesNotExist:
+
+            response = createContributor(data={
+                'name': submission.name,
+                'email': submission.email,
+                'linkedIn': submission.linkedIn
+            })
+
+            if response[1] == status.HTTP_400_BAD_REQUEST:
+                return Response(response[0], status=response[1])
+            
+        # think of a better approch
+        request.data['submitted_by'] = Contributor.objects.get(email=submission.email).id
+
+        serializer = PastPaperSerializer(data=request.data)
 
         if serializer.is_valid():
             serializer.save()
+
+            response = deleteSubmission(submission_id=submission.id)
+
+            if response[1] == status.HTTP_400_BAD_REQUEST:
+                return Response(response[0], status=response[1])
+
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+        #     return Response(serializer.data, status=status.HTTP_201_CREATED)
+        # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+
+    def get(self, request):
+        pastpapers = PastPapar.objects.all()
+
+        serializer = PastPaperSerializer(pastpapers, many=True)
+        return Response(serializer.data)

@@ -45,6 +45,7 @@ class ViewSDKClient {
         },
         metaData: {
           fileName: "Past Paper",
+          hasReadOnlyAccess: true,
         },
       },
       viewerConfig

@@ -22,7 +22,7 @@ const AdobePdf = ({ url }: { url: string }) => {
     <div className="lg:mr-8 mb-8  w-full lg:w-[70%] border-4">
       <div
         id="pdf-div"
-        className="w-full h-[33rem] lg:h-[60rem]"
+        className="w-full h-[33rem] lg:h-full"
         onDocumentLoad={loadPDF()}
       ></div>
     </div>

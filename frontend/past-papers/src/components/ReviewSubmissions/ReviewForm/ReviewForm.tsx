@@ -34,6 +34,7 @@ export default function ReviewForm({
     resolver: zodResolver(reviewFormSchema),
     defaultValues: {
       course_code: "",
+      year: "",
       instructor_name: "",
       course_title: "",
     },
@@ -42,6 +43,7 @@ export default function ReviewForm({
   function onSubmit(values: z.infer<typeof reviewFormSchema>) {
     const formData = {
       course_code: values.course_code,
+      year: values.year,
       course_title: values.course_title,
       instructor_name: values.instructor_name,
       campus: values.campus,
@@ -52,6 +54,7 @@ export default function ReviewForm({
     handleNext(formData);
     form.reset({
       course_code: "",
+      year: "",
       instructor_name: "",
       course_title: "",
       campus: values.campus,
@@ -75,6 +78,23 @@ export default function ReviewForm({
                   </FormControl>
                   <FormDescription>
                     Add course code present on past paper
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="year"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Year</FormLabel>
+                  <FormControl>
+                    <Input placeholder="2023" {...field} />
+                  </FormControl>
+                  <FormDescription>
+                    Add Year present on past paper
                   </FormDescription>
                   <FormMessage />
                 </FormItem>

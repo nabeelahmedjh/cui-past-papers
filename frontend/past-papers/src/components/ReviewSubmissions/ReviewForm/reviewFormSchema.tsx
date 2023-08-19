@@ -4,6 +4,7 @@ export const reviewFormSchema = z.object({
   course_code: z
     .string()
     .regex(/^[a-zA-Z]{3}\d{3}$/, "Value should be in the format ABC123"),
+  year: z.string().regex(/^\d{4}$/, "Value should be in the format 2023"),
   instructor_name: z
     .string()
     .min(3, {

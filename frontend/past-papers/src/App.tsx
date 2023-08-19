@@ -7,6 +7,7 @@ import "./App.css";
 
 import Home from "./components/Home";
 import ReviewSubmissions from "./components/ReviewSubmissions";
+import AddSubmissions from "./components/AddSubmissions";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/review-submissions" element={<ReviewSubmissions />} />
+          <Route path="/add-submissions" element={<AddSubmissions />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>

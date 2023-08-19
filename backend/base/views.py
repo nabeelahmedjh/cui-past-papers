@@ -133,7 +133,7 @@ class PaperPaperView(APIView):
                 return Response(response[0], status=response[1])
             
         # think of a better approch
-        request.data._mutable = True
+        request.POST._mutable = True
         request.data['submitted_by'] = Contributor.objects.get(email=submission.email).id
         request.data['file'] = submission.file
         

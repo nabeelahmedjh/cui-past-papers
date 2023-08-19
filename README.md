@@ -5,7 +5,7 @@
 ### Before Beginning below steps, Install Node js 18
 
 For first time setup of the frontend run
-
+`cd frontend/pat-papers`
 `npm install`
 
 Then everytime you need to run server use

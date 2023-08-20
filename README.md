@@ -10,7 +10,27 @@ For first time setup of the frontend run
 
 `npm install`
 
+
+creat files `.env.development` for local build and `.env.production` for production build in `frontend\past-papers\` (project root)
+
+add the below variables to them
+
+generate your client id from [click Here](https://acrobatservices.adobe.com/dc-integration-creation-app-cdn/main.html?api=pdf-embed-api)
+if you are going to access the server using localhost, enter localhost in the domain when asked by Adobe to make a client id for localhost
+
+```
+
+#for localhost only 
+VITE_ADOBE_PDF_CLIENT_ID = 81092c79fac91f6
+
+#django development server URL local
+VITE_DJANGO_SERVER_URL = http://localhost:8000
+
+```
+
 Then everytime you need to run server use
+
+`cd frontend/pat-papers`
 
 `npm run dev`
 

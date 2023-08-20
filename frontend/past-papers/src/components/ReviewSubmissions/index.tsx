@@ -4,16 +4,20 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 export default function ReviewSubmissions() {
+  // Set HTML Document Title
+  useEffect(() => {
+    document.title = "Review Submissions";
+  }, []);
+
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [submissions, setSubmissions] = useState<any[]>([]);
+
   const [displayedSubmissionIndex, setDisplayedSubmissionIndex] =
     useState<number>(0);
 
-  const pdfUrl: string = `http://localhost:8000${
+  const pdfUrl: string = `${import.meta.env.VITE_DJANGO_SERVER_URL}${
     submissions[displayedSubmissionIndex]?.file || ""
   }`;
-
-  axios.defaults.baseURL = "http://localhost:8000/api";
 
   useEffect(() => {
     fetchSubmissions();
@@ -112,7 +116,13 @@ export default function ReviewSubmissions() {
                   handleDeclineAndDelete={handleDeclineAndDelete}
                 />
               )}
-              {pdfUrl && <AdobePdf url={pdfUrl} />}
+              {pdfUrl && (
+                <AdobePdf
+                  url={pdfUrl}
+                  name={submissions[displayedSubmissionIndex]?.name}
+                  email={submissions[displayedSubmissionIndex]?.email}
+                />
+              )}
             </>
           ) : (
             <h1 className="text-2xl mr-[42%] mt-[5%]">

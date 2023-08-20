@@ -10,8 +10,7 @@ written permission of Adobe.
 */
 
 /* Pass your registered client id */
-const client_id = "81092c7bfd46469aa50999b99fac91f6"; // localhost client id change in production
-
+const client_id: string = import.meta.env.VITE_ADOBE_PDF_CLIENT_ID;
 class ViewSDKClient {
   constructor() {
     this.readyPromise = new Promise((resolve) => {

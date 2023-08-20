@@ -45,12 +45,9 @@ export default function AddForm() {
       console.log("Form Values: ", formData);
 
       try {
-        const response = await axios.post(
-          "http://127.0.0.1:8000/api/submissions/",
-          formData
-        );
+        const response = await axios.post("/submissions/", formData);
         console.log("Server Response: ", response.data);
-        alert("Form submitted successfully!");
+        alert("Your submission is sent for approval");
         // Handle the server response as needed
         window.location.reload();
       } catch (error) {
@@ -135,7 +132,6 @@ export default function AddForm() {
                   <FormLabel>Upload PDF</FormLabel>
                   <FormControl>
                     <Input
-                      required
                       type="file"
                       accept=".pdf"
                       {...field}
@@ -150,7 +146,7 @@ export default function AddForm() {
               )}
             />
 
-            <Button type="submit">Accept</Button>
+            <Button type="submit">Add</Button>
           </form>
         </Form>
       </div>

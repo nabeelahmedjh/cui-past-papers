@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
-from .models import Contributor, Submission, PastPapar
+from .models import Contributor, Submission, PastPaper
 
 
 
@@ -48,7 +48,7 @@ class PastPaperSerializer(serializers.ModelSerializer):
 
     # submission_id = serializers.IntegerField(read_only=True)
     class Meta:
-        model = PastPapar
+        model = PastPaper
         fields = '__all__'
 
         extra_kwargs = {

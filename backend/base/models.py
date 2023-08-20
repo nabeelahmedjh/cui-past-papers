@@ -24,7 +24,7 @@ class Contributor(models.Model):
         return self.name
 
 
-class PastPapar(models.Model):
+class PastPaper(models.Model):
 
     campus_choices = [
         ('ISB', 'Islamabad'),

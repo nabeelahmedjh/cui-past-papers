@@ -9,7 +9,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 
-from .models import Contributor, PastPapar, Submission
+from .models import Contributor, PastPaper, Submission
 from .serializers import ContributorSerializer, SubmissionSerializer, PastPaperSerializer
 
 
@@ -157,7 +157,7 @@ class PaperPaperView(APIView):
 
 
     def get(self, request):
-        pastpapers = PastPapar.objects.all()
+        pastpapers = PastPaper.objects.all()
 
         serializer = PastPaperSerializer(pastpapers, many=True)
         return Response(serializer.data)

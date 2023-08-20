@@ -10,6 +10,8 @@ For first time setup of the frontend run
 
 `npm install`
 
+For the production build, you will use a different server URL and generate a new client id from Adobe for that domain when deploying
+Also, note that your env files are not added to the repo for security reasons. 
 
 creat files `.env.development` for local build and `.env.production` for production build in `frontend\past-papers\` (project root)
 

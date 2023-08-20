@@ -132,6 +132,16 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# settings.py
+
+REST_FRAMEWORK = {
+    # Other DRF settings...
+
+    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    # 'PAGE_SIZE': 10,  # Set your default page size
+    # 'PAGE_SIZE_QUERY_PARAM': 'page_size',  # Override page size via query parameter
+    # 'MAX_PAGE_SIZE': 100,  # Set a maximum limit for page size
+}
 
 
 

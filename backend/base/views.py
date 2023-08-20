@@ -7,6 +7,7 @@ from django.http import JsonResponse, HttpResponse
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.pagination import PageNumberPagination
 
 
 from .models import Contributor, PastPaper, Submission
@@ -16,6 +17,12 @@ from .serializers import ContributorSerializer, SubmissionSerializer, PastPaperS
 from .helpers.utils import createContributor, deleteSubmission
 
 # Create your views here.
+
+
+class ContributorPagination(PageNumberPagination):
+    page_size = 10
+    page_size_query_param = 'page_size'
+    max_page_size = 50
 
 
 class SubmissionView(APIView):
@@ -54,13 +61,26 @@ class SubmissionDetailView(APIView):
 
 class ContributorView(APIView):
 
-
+    pagination_class = ContributorPagination
 
     def get(self, request):
         contributors = Contributor.objects.all()
 
-        serializer = ContributorSerializer(contributors, many=True)
-        return Response(serializer.data)
+
+        paginator = self.pagination_class()
+        paginated_queryset = paginator.paginate_queryset(contributors, request)
+
+
+        serializer = ContributorSerializer(paginated_queryset, many=True)
+        
+        response_data = {
+            'count': paginator.page.paginator.count,
+            'next': paginator.get_next_link(),
+            'previous': paginator.get_previous_link(),
+            'results': serializer.data
+        }
+
+        return Response(response_data, status=status.HTTP_200_OK)
 
 
     def post(self, request):

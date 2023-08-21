@@ -8,6 +8,7 @@ import "./App.css";
 import Home from "./components/Home";
 import ReviewSubmissions from "./components/ReviewSubmissions";
 import AddSubmissions from "./components/AddSubmissions";
+import Contributors from "./components/Contributors";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/review-submissions" element={<ReviewSubmissions />} />
           <Route path="/add-submissions" element={<AddSubmissions />} />
+          <Route path="/contributors" element={<Contributors />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>

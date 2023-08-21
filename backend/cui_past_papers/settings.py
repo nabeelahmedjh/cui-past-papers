@@ -25,7 +25,11 @@ SECRET_KEY = 'django-insecure-&e#i+8glcao%5na$yhd7pjmn+nd!v&wr(u2s!+%7g+^i+6k^xq
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "localhost",
+    "inspiron.lan",
+    "myvelop.duckdns.org",
+]
 
 
 # Application definition

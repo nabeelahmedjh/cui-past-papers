@@ -1,7 +1,6 @@
 import { Card, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "../ui/button";
 
 import { LinkedInLogoIcon } from "@radix-ui/react-icons";
 
@@ -15,22 +14,22 @@ export default function ContCard({
   linkedIn: string;
 }) {
   return (
-    <div>
+    <div className=" rounded-lg shadow-md hover:shadow-lg dark:shadow-slate-700/50 dark:hover:shadow-slate-700/30 transition ease-in-out delay-150 duration-300 hover:scale-110 ">
       <Card>
         <CardHeader className="items-center">
-          <Avatar className="mb-4">
-            <AvatarImage src={image} />
+          <Avatar className=" mb-4 h-24 w-24">
+            <AvatarImage draggable={false} src={image} />
             <AvatarFallback className=" text-xl">😎</AvatarFallback>
           </Avatar>
 
-          <CardTitle className="text-xs sm:text-inherit">{name}</CardTitle>
+          <CardTitle className=" hover:cursor-default text-xs sm:text-2xl font-monsterrat font-normal">
+            {name}
+          </CardTitle>
         </CardHeader>
-        <CardFooter className="justify-center">
-          <Button className=" rounded-full">
-            <a href={linkedIn}>
-              <LinkedInLogoIcon className="w-6 h-6" />
-            </a>
-          </Button>
+        <CardFooter className="justify-center rounded-lg">
+          <a target="_blank" href={linkedIn}>
+            <LinkedInLogoIcon className="w-8 h-8 hover:text-sky-700" />
+          </a>
         </CardFooter>
       </Card>
     </div>

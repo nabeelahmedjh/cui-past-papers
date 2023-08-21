@@ -15,7 +15,7 @@ const AdobePdf = ({
       viewSDKClient.previewFile(
         "pdf-div",
         {
-          defaultViewMode: "IN_LINE",
+          defaultViewMode: "FIT_WIDTH",
           showAnnotationTools: true,
           showLeftHandPanel: true,
           showPageControls: true,

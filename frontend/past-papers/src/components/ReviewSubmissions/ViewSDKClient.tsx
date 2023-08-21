@@ -8,8 +8,6 @@ it. If you have received this file from a source other than Adobe,
 then your use, modification, or distribution of it requires the prior
 written permission of Adobe.
 */
-
-/* Pass your registered client id */
 const client_id: string = import.meta.env.VITE_ADOBE_PDF_CLIENT_ID;
 class ViewSDKClient {
   constructor() {
@@ -17,6 +15,7 @@ class ViewSDKClient {
       if (window.AdobeDC) {
         resolve();
       } else {
+        /* Wait for Adobe Acrobat Services PDF Embed API to be ready */
         document.addEventListener("adobe_dc_view_sdk.ready", () => {
           resolve();
         });
@@ -24,54 +23,89 @@ class ViewSDKClient {
     });
     this.adobeDCView = undefined;
   }
+
   ready() {
     return this.readyPromise;
   }
+
   previewFile(divId, viewerConfig, url) {
     const config = {
-      clientId: client_id, ///enter lient id here
+      /* Pass your registered client id */
+      clientId: client_id,
     };
     if (divId) {
+      /* Optional only for Light Box embed mode */
+      /* Pass the div id in which PDF should be rendered */
       config.divId = divId;
     }
+    /* Initialize the AdobeDC View object */
     this.adobeDCView = new window.AdobeDC.View(config);
+
+    /* Invoke the file preview API on Adobe DC View object */
     const previewFilePromise = this.adobeDCView.previewFile(
       {
+        /* Pass information on how to access the file */
         content: {
+          /* Location of file where it is hosted */
           location: {
             url: url,
+            /*
+                    If the file URL requires some additional headers, then it can be passed as follows:-
+                    headers: [
+                        {
+                            key: "<HEADER_KEY>",
+                            value: "<HEADER_VALUE>",
+                        }
+                    ]
+                    */
           },
         },
+        /* Pass meta data of file */
         metaData: {
+          /* file name */
           fileName: "Past Paper",
           hasReadOnlyAccess: true,
         },
       },
       viewerConfig
     );
+
     return previewFilePromise;
   }
+
   previewFileUsingFilePromise(divId, filePromise, fileName) {
+    /* Initialize the AdobeDC View object */
     this.adobeDCView = new window.AdobeDC.View({
-      clientId: client_id, //enter Client id here
+      /* Pass your registered client id */
+      clientId: client_id,
+      /* Pass the div id in which PDF should be rendered */
       divId,
     });
+
+    /* Invoke the file preview API on Adobe DC View object */
     this.adobeDCView.previewFile(
       {
+        /* Pass information on how to access the file */
         content: {
+          /* pass file promise which resolve to arrayBuffer */
           promise: filePromise,
         },
+        /* Pass meta data of file */
         metaData: {
+          /* file name */
           fileName: fileName,
         },
       },
       {}
     );
   }
+
   registerSaveApiHandler() {
+    /* Define Save API Handler */
     const saveApiHandler = (metaData, content, options) => {
       console.log(metaData, content, options);
       return new Promise((resolve) => {
+        /* Dummy implementation of Save API, replace with your business logic */
         setTimeout(() => {
           const response = {
             code: window.AdobeDC.View.Enum.ApiResponseCode.SUCCESS,
@@ -85,22 +119,30 @@ class ViewSDKClient {
         }, 2000);
       });
     };
+
     this.adobeDCView.registerCallback(
       window.AdobeDC.View.Enum.CallbackType.SAVE_API,
       saveApiHandler,
       {}
     );
   }
+
   registerEventsHandler() {
+    /* Register the callback to receive the events */
     this.adobeDCView.registerCallback(
+      /* Type of call back */
       window.AdobeDC.View.Enum.CallbackType.EVENT_LISTENER,
+      /* call back function */
       (event) => {
         console.log(event);
       },
+      /* options to control the callback execution */
       {
-        enablePDFAnalytics: true,
+        /* Enable PDF analytics events on user interaction. */
+        enablePDFAnalytics: false,
       }
     );
   }
 }
+
 export default ViewSDKClient;

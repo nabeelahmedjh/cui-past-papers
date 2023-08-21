@@ -1,4 +1,4 @@
-import AdobePdf from "./ReviewForm/AdobePdf";
+import AdobePdf from "./AdobePdf";
 import ReviewForm from "./ReviewForm/ReviewForm";
 import { useState, useEffect } from "react";
 import axios from "axios";

@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -44,11 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
-    'djoser',
-    'rest_framework_simplejwt',
     'base',
     'corsheaders',
-
 ]
 
 MIDDLEWARE = [
@@ -143,16 +139,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # settings.py
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.SessionAuthentication',
-       'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ]
+    # Other DRF settings...
+
+    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    # 'PAGE_SIZE': 10,  # Set your default page size
+    # 'PAGE_SIZE_QUERY_PARAM': 'page_size',  # Override page size via query parameter
+    # 'MAX_PAGE_SIZE': 100,  # Set a maximum limit for page size
 }
 
-SIMPLE_JWT = {
-    'AUTH_HEADER_TYPES': ('JWT',),
-    'ACCESS_TOKEN_LIFETIME': timedelta(hours=3),
-}
+
 
 
 # defined cors allowed origins

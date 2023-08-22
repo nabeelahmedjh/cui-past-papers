@@ -12,6 +12,19 @@ class SubmissionSerializer(serializers.ModelSerializer):
     def validate_email(self, value):
         return value.lower()
 
+    def validate_file(self, value):
+
+            if not value.name.lower().endswith('.pdf'):
+                raise serializers.ValidationError("File must be in PDF format.")
+
+            max_file_size = 30 * 10**6
+
+            if value.size > max_file_size:
+                raise serializers.ValidationError("File size must be upto than 30MB.")
+            
+            return value
+            
+
 
 class ContributorSerializer(serializers.ModelSerializer):
 
@@ -59,6 +72,18 @@ class PastPaperSerializer(serializers.ModelSerializer):
                 'required': True
             }
         }
+
+        def validate_file(self, value):
+
+            if not value.name.lower().endswith('.pdf'):
+                raise serializers.ValidationError("File must be in PDF format.")
+
+            max_file_size = 30 * 10**6
+
+            if value.size > max_file_size:
+                raise serializers.ValidationError("File size must be upto than 30MB.")
+            
+            return value
 
 
     # def validate_submitted_by(self, value):

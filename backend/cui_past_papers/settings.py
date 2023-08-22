@@ -26,6 +26,7 @@ SECRET_KEY = 'django-insecure-&e#i+8glcao%5na$yhd7pjmn+nd!v&wr(u2s!+%7g+^i+6k^xq
 DEBUG = True
 
 ALLOWED_HOSTS = [
+    "*",
     "localhost",
     "inspiron.lan",
     "myvelop.duckdns.org",
@@ -156,5 +157,6 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://myvelop.duckdns.org:5173",
     "http://inspiron.lan:5173",
+    "http://127.0.0.1",
 
 ]

@@ -15,12 +15,12 @@ class SubmissionSerializer(serializers.ModelSerializer):
     def validate_file(self, value):
 
             if not value.name.lower().endswith('.pdf'):
-                raise serializers.ValidationError("File must be in PDF format.")
+                raise serializers.ValidationError("Only PDF files are accepted.")
 
             max_file_size = 30 * 10**6
 
             if value.size > max_file_size:
-                raise serializers.ValidationError("File size must be upto than 30MB.")
+                raise serializers.ValidationError("File size should be less than 30MB.")
             
             return value
             

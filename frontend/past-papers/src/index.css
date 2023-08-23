@@ -6,6 +6,7 @@
 
 @layer base {
   :root {
+    --file-color: 115 81% 65%;
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
     --card: 0 0% 100%;
@@ -29,6 +30,7 @@
   }
 
   .dark {
+    --file-color: 0 81% 65%;
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
     --card: 222.2 84% 4.9%;
@@ -59,3 +61,12 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* @layer components {
+  input[type="file"]::-webkit-file-upload-button,
+  input[type="file"]::file-selector-button {
+    color: hsl(var(--primary));
+    margin-inline-start: -0.1rem;
+    margin-inline-end: 1rem;
+  }
+} */

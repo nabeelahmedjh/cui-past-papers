@@ -1,7 +1,7 @@
 import * as z from "zod";
 
-const MAX_FILE_SIZE = 30;
-const ACCEPTED_IMAGE_TYPES = ["application/pdf"];
+// const MAX_FILE_SIZE = 30;
+// const ACCEPTED_IMAGE_TYPES = ["application/pdf"];
 
 export const addFormSchema = z.object({
   name: z

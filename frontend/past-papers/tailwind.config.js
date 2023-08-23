@@ -19,6 +19,9 @@ module.exports = {
       },
     },
     extend: {
+      content: {
+        uploadIcon: "url('./src/assets/upload-icon.svg')",
+      },
       fontFamily: {
         monsterrat: ["Montserrat", "sans-serif"],
       },

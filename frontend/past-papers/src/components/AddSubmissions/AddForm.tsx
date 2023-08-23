@@ -16,9 +16,14 @@ import {
 import * as z from "zod";
 import axios from "axios";
 import { useState } from "react";
+import { SuccessAlert } from "./SuccessAlert";
+import { FailedAlert } from "./FailedAlert";
 
 export default function AddForm() {
   const [selectedFile, setSelectedFile] = useState(null);
+  const [successAlert, setSuccessAlert] = useState(false);
+  const [failedAlert, setfailedAlert] = useState(false);
+  const [failedAlertMessage, setfailedAlertMessage] = useState(null);
 
   const form = useForm<z.infer<typeof addFormSchema>>({
     resolver: zodResolver(addFormSchema),
@@ -31,6 +36,8 @@ export default function AddForm() {
   });
 
   const handleFileChange = (event) => {
+    event.preventDefault();
+    event.target.classList.remove("bg-accent");
     console.log(event.target.files[0]);
     setSelectedFile(event.target.files[0]);
   };
@@ -47,11 +54,28 @@ export default function AddForm() {
       try {
         const response = await axios.post("/submissions/", formData);
         console.log("Server Response: ", response.data);
-        alert("Your submission is sent for approval");
+        if (response.status === 201) {
+          // alert(
+          //   "Your submission is sent successfully and will be approved soon."
+          // );
+          setSuccessAlert(true);
+
+          // if (!successAlert) {
+          //   window.location.reload();
+          // }
+        }
         // Handle the server response as needed
-        window.location.reload();
       } catch (error) {
-        console.error("Error uploading form:", error);
+        console.log("Error uploading form:", error);
+
+        if (error.response.status === 400) {
+          const errorMessage = error.response.data
+            ? error.response.data.file[0]
+            : "Please check your form again";
+          // alert(errorMessage);
+          setfailedAlert(true);
+          setfailedAlertMessage(errorMessage);
+        }
       }
 
       form.reset({
@@ -67,6 +91,8 @@ export default function AddForm() {
     <div className=" flex justify-center mx-4 mb-8">
       <div>
         <h1 className=" w-full text-2xl mb-8">Add Submission</h1>
+        {successAlert && <SuccessAlert />}
+        {failedAlert && <FailedAlert message={failedAlertMessage} />}
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <FormField
@@ -91,11 +117,7 @@ export default function AddForm() {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input
-                      type="email"
-                      placeholder="ali@gmail.com"
-                      {...field}
-                    />
+                    <Input placeholder="ali@gmail.com" {...field} />
                   </FormControl>
                   <FormDescription>Add your email address</FormDescription>
                   <FormMessage />
@@ -111,7 +133,6 @@ export default function AddForm() {
                   <FormLabel>LinkedIn</FormLabel>
                   <FormControl>
                     <Input
-                      type="url"
                       placeholder="https://www.linkedin.com/in/ali"
                       {...field}
                     />
@@ -132,10 +153,19 @@ export default function AddForm() {
                   <FormLabel>Upload PDF</FormLabel>
                   <FormControl>
                     <Input
+                      className="cursor-pointer file:text-transparent file:absolute before:pb-[5%] h-52 pl-[20%] pt-[5%] before:w-24 before:ml-[20%] before:content-uploadIcon after:text-primary after:mt-2 after:content-['Drag_&_drop_your_files_or_Browse'] "
                       type="file"
-                      accept=".pdf"
+                      accept="application/pdf"
                       {...field}
                       onChange={handleFileChange}
+                      onDragOver={(e) => {
+                        e.preventDefault();
+                        e.target.classList.add("bg-accent"); // This will be your Tailwind CSS class
+                      }}
+                      onDragLeave={(e) => {
+                        e.preventDefault();
+                        e.target.classList.remove("bg-accent"); // This will be your Tailwind CSS class
+                      }}
                     />
                   </FormControl>
                   <FormDescription>
@@ -146,7 +176,9 @@ export default function AddForm() {
               )}
             />
 
-            <Button type="submit">Add</Button>
+            <Button className="w-1/2 ml-[25%]" type="submit">
+              Add Submission
+            </Button>
           </form>
         </Form>
       </div>

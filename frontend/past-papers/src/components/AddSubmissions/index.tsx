@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import AddForm from "./AddForm";
 
-export default function AddSubmission() {
+export default function AddSubmissions() {
   useEffect(() => {
     document.title = "Add Submission";
   }, []);

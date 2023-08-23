@@ -10,6 +10,7 @@ function App() {
   const observerRef = useRef();
 
   useEffect(() => {
+    document.title = "Contributors";
     fetchContributors();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

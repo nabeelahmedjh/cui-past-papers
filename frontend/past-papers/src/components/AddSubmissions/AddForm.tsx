@@ -92,7 +92,9 @@ export default function AddForm() {
       <div>
         <h1 className=" w-full text-2xl mb-8">Add Submission</h1>
         {successAlert && <SuccessAlert />}
-        {failedAlert && <FailedAlert message={failedAlertMessage} />}
+        {failedAlert && (
+          <FailedAlert toggle={setfailedAlert} message={failedAlertMessage} />
+        )}
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <FormField

@@ -1,7 +1,6 @@
 import {
   AlertDialog,
   AlertDialogAction,
-  AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogFooter,
@@ -9,7 +8,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 
-export function FailedAlert({ message }) {
+export function FailedAlert({ message, toggle }) {
   return (
     <AlertDialog defaultOpen={true}>
       <AlertDialogContent className=" w-[80%]">
@@ -19,9 +18,9 @@ export function FailedAlert({ message }) {
         </AlertDialogHeader>
         <AlertDialogFooter className="sm:w-[15%]">
           <AlertDialogAction
-          // onClick={() => {
-          //   window.location.reload();
-          // }}
+            onClick={() => {
+              toggle(false);
+            }}
           >
             Retry
           </AlertDialogAction>

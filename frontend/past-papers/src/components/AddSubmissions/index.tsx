@@ -6,7 +6,7 @@ export default function AddSubmissions() {
     document.title = "Add Submission";
   }, []);
   return (
-    <div>
+    <div className="mb-24">
       <AddForm />
     </div>
   );

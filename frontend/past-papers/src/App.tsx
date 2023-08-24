@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import { ThemeProvider } from "@/components/theme-provider";
-import { ModeToggle } from "./components/mode-toggle";
+import NavBar from "./components/NavBar";
 
 import "./App.css";
 
@@ -9,19 +9,21 @@ import Home from "./components/Home";
 import ReviewSubmissions from "./components/ReviewSubmissions";
 import AddSubmissions from "./components/AddSubmissions";
 import Contributors from "./components/Contributors";
+import About from "./components/About";
+import PastPapers from "./components/PastPapers";
 
 function App() {
   return (
-    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+    <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
       <BrowserRouter>
-        <div className="flex justify-end my-4 mr-8">
-          <ModeToggle />
-        </div>
+        <NavBar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/review-submissions" element={<ReviewSubmissions />} />
           <Route path="/add-submissions" element={<AddSubmissions />} />
           <Route path="/contributors" element={<Contributors />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/past-papers" element={<PastPapers />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>

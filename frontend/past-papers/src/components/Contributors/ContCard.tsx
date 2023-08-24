@@ -14,7 +14,7 @@ export default function ContCard({
   linkedIn: string;
 }) {
   return (
-    <div className="border rounded-lg shadow-md hover:shadow-lg dark:shadow-slate-700/50 dark:hover:shadow-slate-700/30 transition ease-in-out delay-150 duration-300 hover:scale-110 ">
+    <div className="border rounded-lg shadow-md hover:shadow-lg dark:shadow-slate-700/50 dark:hover:shadow-slate-700/30 transition ease-in-out delay-75 duration-200 hover:scale-110 ">
       <Card className="border-0">
         <CardHeader className="items-center">
           <Avatar className=" mb-4 h-24 w-24">

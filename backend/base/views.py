@@ -3,6 +3,8 @@ import json
 from django.shortcuts import render
 from django.urls import reverse
 from django.http import JsonResponse, HttpResponse
+from django.db.models import Count, Q
+from django.core import exceptions
 
 from rest_framework import status
 from rest_framework.response import Response
@@ -14,13 +16,13 @@ from .models import Contributor, PastPaper, Submission
 from .serializers import ContributorSerializer, SubmissionSerializer, PastPaperSerializer
 
 
-from .helpers.utils import createContributor, deleteSubmission
+from .helpers.utils import createContributor, deleteSubmission, getOrderByFields, paginateResponse
 
 # Create your views here.
 
 
-class ContributorPagination(PageNumberPagination):
-    page_size = 10
+class DefaultPagination(PageNumberPagination):
+    page_size = 12
     page_size_query_param = 'page_size'
     max_page_size = 50
 
@@ -61,26 +63,22 @@ class SubmissionDetailView(APIView):
 
 class ContributorView(APIView):
 
-    pagination_class = ContributorPagination
+    pagination_class = DefaultPagination
 
     def get(self, request):
-        contributors = Contributor.objects.all()
 
 
-        paginator = self.pagination_class()
-        paginated_queryset = paginator.paginate_queryset(contributors, request)
+        order_by_param = request.GET.get('order_by', 'name')
+        allowed_fields = ['name', 'email', 'linkedIn', 'contribution_count']
+
+        order_by_fields = getOrderByFields(order_by_param, allowed_fields=allowed_fields)
 
 
-        serializer = ContributorSerializer(paginated_queryset, many=True)
-        
-        response_data = {
-            'count': paginator.page.paginator.count,
-            'next': paginator.get_next_link(),
-            'previous': paginator.get_previous_link(),
-            'results': serializer.data
-        }
+        contributors = Contributor.objects.annotate(contribution_count=Count('pastpaper')).order_by(*order_by_fields)
 
-        return Response(response_data, status=status.HTTP_200_OK)
+        paginated_response = paginateResponse(request, contributors, self.pagination_class, ContributorSerializer)
+
+        return Response(paginated_response, status=status.HTTP_200_OK)
 
 
     def post(self, request):
@@ -95,41 +93,11 @@ class ContributorView(APIView):
 class PaperPaperView(APIView):
 
 
+    pagination_class = DefaultPagination
+
     def post(self, request):
 
 
-
-
-        # try:
-        #     submission = Submission.objects.get(id=request.data.get('submitted_by', None))
-        
-        # except Submission.DoesNotExist:
-        #     return Response({
-        #         'submiited_by': [
-        #             "Not provided or not valid"
-        #         ]
-        #     }, status=status.HTTP_400_BAD_REQUEST)
-    
-
-        # try:
-        #     contributor = Contributor.objects.get(email=submission.email)
-
-        # except Contributor.DoesNotExist:
-
-        #     url = request.build_absolute_uri(reverse('contributors'))
-        #     # Retrieve the relative URL using the name and prepend the scheme
-        #     response = createContributor(url, submission)
-            
-        #     if response.status_code == 400:
-
-        #         return Response(response, status=status.HTTP_400_BAD_REQUEST)
-            
-        
-        # contributor = Contributor.objects.get(email=submission.email)
-        # print(contributor.id)
-        
-        # request.data._mutable = True
-        # request.data['submitted_by'] = contributor.id
         try:
             submission = Submission.objects.get(id=request.data.get('submission_id', ''))
         except Submission.DoesNotExist:
@@ -171,13 +139,26 @@ class PaperPaperView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-        #     return Response(serializer.data, status=status.HTTP_201_CREATED)
-        # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-
 
     def get(self, request):
-        pastpapers = PastPaper.objects.all()
 
-        serializer = PastPaperSerializer(pastpapers, many=True)
-        return Response(serializer.data)
+        search_query = request.GET.get('search', '')
+        order_by_param = request.GET.get('order_by', '-uploaded_at')
+        allowed_fields = ['id', 'course_code', 'course_title', 'instructor_name', 'year', 'campus', 'uploaded_at', 'exam_type', 'submitted_by']
+
+        order_by_fields = getOrderByFields(order_by_param, allowed_fields=allowed_fields, default_field='-uploaded_at')
+
+        pastpapers = PastPaper.objects.filter(
+            Q(course_code__icontains=search_query)|
+            Q(course_title__icontains=search_query) |
+            Q(instructor_name__icontains=search_query)|
+            Q(year__icontains=search_query) |
+            Q(campus__icontains=search_query) |
+            Q(exam_type__icontains=search_query)
+        ).order_by(*order_by_fields)
+
+        paginated_response = paginateResponse(request, pastpapers, self.pagination_class, PastPaperSerializer)
+
+        return Response(paginated_response, status=status.HTTP_200_OK)
+    
+    

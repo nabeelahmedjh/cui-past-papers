@@ -29,15 +29,11 @@ class SubmissionSerializer(serializers.ModelSerializer):
 class ContributorSerializer(serializers.ModelSerializer):
 
 
-    # name = serializers.CharField(
-    #     validators=[
-    #         UniqueValidator(queryset=Contributor.objects.all())
-    #     ]
-    # )
+    contribution_count = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = Contributor
-        fields = '__all__'
+        fields = ['id', 'name', 'email', 'linkedIn', 'contribution_count']
 
         extra_kwargs = {
             'linkedIn': {

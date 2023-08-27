@@ -117,11 +117,14 @@ export default function ReviewSubmissions() {
                 />
               )}
               {pdfUrl && (
-                <AdobePdf
-                  url={pdfUrl}
-                  name={submissions[displayedSubmissionIndex]?.name}
-                  email={submissions[displayedSubmissionIndex]?.email}
-                />
+                <div className="lg:mr-8 mb-8  w-full lg:w-[70%]">
+                  <h1 className=" text-center mb-2 text-xl">
+                    {submissions[displayedSubmissionIndex]?.name &&
+                      submissions[displayedSubmissionIndex]?.email &&
+                      `Submitted by ${submissions[displayedSubmissionIndex]?.name} (${submissions[displayedSubmissionIndex]?.email})`}
+                  </h1>
+                  <AdobePdf url={pdfUrl} />
+                </div>
               )}
             </>
           ) : (

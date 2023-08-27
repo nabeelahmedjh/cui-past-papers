@@ -8,7 +8,7 @@ export default function MainNav() {
 
   return (
     <div className="flex justify-center">
-      <div className="mt-4 mb-12 min-[760px]:flex items-center justify-between hidden max-w-7xl gap-x-20">
+      <div className="mt-4 mb-12 min-[760px]:flex items-center justify-between hidden w-full max-w-5xl gap-x-20">
         <p className="text-3xl flex-shrink-0 ml-2">📄</p>
         <nav className="flex items-center space-x-6 text-md font-medium flex-shrink-0">
           <Link
@@ -26,7 +26,8 @@ export default function MainNav() {
             to="/past-papers"
             className={cn(
               "transition-colors hover:text-foreground/80",
-              currentPath === "/past-papers"
+              currentPath === "/past-papers" ||
+                currentPath.includes("pdf-viewer")
                 ? "text-foreground ring-2 ring-primary-100 rounded-sm p-2"
                 : "text-foreground/60"
             )}

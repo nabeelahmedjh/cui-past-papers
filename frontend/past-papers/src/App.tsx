@@ -11,6 +11,7 @@ import AddSubmissions from "./components/AddSubmissions";
 import Contributors from "./components/Contributors";
 import About from "./components/About";
 import PastPapers from "./components/PastPapers";
+import PaperViewer from "./components/PastPapers/PaperViewer";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/contributors" element={<Contributors />} />
           <Route path="/about" element={<About />} />
           <Route path="/past-papers" element={<PastPapers />} />
+          <Route path="/past-papers/pdf-viewer/:id" element={<PaperViewer />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>

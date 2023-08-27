@@ -54,7 +54,8 @@ export default function MobileNav() {
                   to="/past-papers"
                   className={cn(
                     "transition-colors hover:text-foreground/80",
-                    currentPath === "/past-papers"
+                    currentPath === "/past-papers" ||
+                      currentPath.includes("pdf-viewer")
                       ? "text-foreground border-b-ring border-b-2"
                       : "text-foreground/60"
                   )}

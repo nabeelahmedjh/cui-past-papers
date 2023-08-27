@@ -29,18 +29,7 @@ class AdobePDF extends Component {
   }
 
   render() {
-    return (
-      <>
-        <div className="lg:mr-8 mb-8  w-full lg:w-[70%]">
-          <h1 className=" text-center mb-2 text-xl">
-            {this.props.name &&
-              this.props.email &&
-              `Submitted by ${this.props.name} (${this.props.email})`}
-          </h1>
-          <div id="pdf-div" className="w-full h-[33rem] lg:h-[95%] "></div>
-        </div>
-      </>
-    );
+    return <div id="pdf-div" className="w-full h-[33rem] lg:h-[95%] "></div>;
   }
 }
 

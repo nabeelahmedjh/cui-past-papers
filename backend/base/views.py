@@ -162,3 +162,18 @@ class PaperPaperView(APIView):
         return Response(paginated_response, status=status.HTTP_200_OK)
     
     
+class PaperPaperDetailView(APIView):
+
+
+    def get(self, request, pk):
+    
+            try:
+                pastpaper = PastPaper.objects.get(id=pk)
+            except PastPaper.DoesNotExist:
+                return Response({
+                    'message': "PastPaper does not exist"
+                }, status=status.HTTP_400_BAD_REQUEST)
+    
+            serializer = PastPaperSerializer(pastpaper)
+    
+            return Response(serializer.data, status=status.HTTP_200_OK)

@@ -1,4 +1,31 @@
-# cui-past-papers
+# CUI Past Papers Repository Documentation
+
+Welcome to the CUI Past Papers GitHub repository – your centralized solution for accessing past papers from the COMSATS Institute of Information Technology (CUI). This repository is designed to help CUI students understand the patterns followed by their teachers when conducting assessments.
+
+## Introduction
+
+As CUI students, we often found it challenging to access past papers in one centralized location. To address this issue, Nabeel Ahmed and Shahzaib came up with the idea of creating a website where students can easily submit and access past papers.
+
+## Website Overview
+
+This GitHub repository serves as the codebase and documentation for the CUI Past Papers project. The main features of the website are as follows:
+
+1. **Past Paper Submission:**
+   - Students can submit past papers for different courses.
+   - Submitted papers undergo a review process by administrators to ensure their validity.
+
+2. **Review Process:**
+   - Administrators evaluate each submission to determine its validity.
+   - Valid past papers are added to our Past Paper Gallery.
+
+3. **Contributors List:**
+   - Students who contribute valid past papers will be recognized and added to the Contributors List.
+
+4. **Invalid Submissions:**
+   - Submissions that do not meet the validity criteria will be declined.
+
+5. **Past Paper Gallery:**
+   - All the valid submissions will be added to pastpaper gallery where user can search. student can search for their required Pastpaer as well.
 
 # Getting Started Frontend
 

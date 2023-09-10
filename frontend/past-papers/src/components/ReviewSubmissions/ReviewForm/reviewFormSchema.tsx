@@ -1,10 +1,23 @@
 import * as z from "zod";
 
+const currentYear = new Date().getFullYear();
+
 export const reviewFormSchema = z.object({
   course_code: z
     .string()
     .regex(/^[a-zA-Z]{3}\d{3}$/, "Value should be in the format ABC123"),
-  year: z.string().regex(/^\d{4}$/, "Value should be in the format 2023"),
+  year: z
+    .string()
+    .regex(/^\d{4}$/, "Value should be in the format 2023")
+    .refine(
+      (value) => {
+        const year = parseInt(value, 10);
+        return year >= 2000 && year <= currentYear;
+      },
+      {
+        message: `Year should be between 2000 and ${currentYear}.`,
+      }
+    ),
   instructor_name: z
     .string()
     .min(3, {

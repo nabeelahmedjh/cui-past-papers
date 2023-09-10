@@ -11,21 +11,37 @@ As CUI students, we often found it challenging to access past papers in one cent
 This GitHub repository serves as the codebase and documentation for the CUI Past Papers project. The main features of the website are as follows:
 
 1. **Past Paper Submission:**
+
    - Students can submit past papers for different courses.
    - Submitted papers undergo a review process by administrators to ensure their validity.
 
 2. **Review Process:**
+
    - Administrators evaluate each submission to determine its validity.
    - Valid past papers are added to our Past Paper Gallery.
 
 3. **Contributors List:**
+
    - Students who contribute valid past papers will be recognized and added to the Contributors List.
 
-4. **Invalid Submissions:**
+4. **Featured Contributors:**
+
+   - Top contributors are featured on the Home page of the site.
+
+5. **Invalid Submissions:**
+
    - Submissions that do not meet the validity criteria will be declined.
 
-5. **Past Paper Gallery:**
-   - All the valid submissions will be added to pastpaper gallery where user can search. student can search for their required Pastpaer as well.
+6. **Past Paper Gallery:**
+
+   - All the valid submissions will be added to pastpaper gallery.
+
+7. **Search/Filter by terms:**
+
+   - User can search for their required past paper with different search terms such as course name, course code, or instructor name.
+
+8. **View/Download Past Paper:**
+   - User can view and download the Past Paper PDF on Desktop and Mobile Devices without any need of external plugin.
 
 # Getting Started Frontend
 
@@ -38,7 +54,7 @@ For first time setup of the frontend run
 `npm install`
 
 For the production build, you will use a different server URL and generate a new client id from Adobe for that domain when deploying
-Also, note that your env files are not added to the repo for security reasons. 
+Also, note that your env files are not added to the repo for security reasons.
 
 creat files `.env.development` for local build and `.env.production` for production build in `frontend\past-papers\` (project root)
 
@@ -49,7 +65,7 @@ if you are going to access the server using localhost, enter localhost in the do
 
 ```
 
-#for localhost only 
+#for localhost only
 VITE_ADOBE_PDF_CLIENT_ID = 81092c79fac91f6
 
 #django development server URL local
@@ -65,7 +81,6 @@ Then everytime you need to run server use
 
 <br>
 <br>
-
 
 # Getting Started Backend
 
@@ -104,14 +119,12 @@ python manage.py runserver
 ```
 
 ### Note: YOU NEED TO CREATE A SUPER USER TO ACCESS THE ADMIN PANEL
+
 #### for creating a super user
 
 ```bash
 python manage.py createsuperuser
 ```
-
-
-
 
 <br>
 <br>

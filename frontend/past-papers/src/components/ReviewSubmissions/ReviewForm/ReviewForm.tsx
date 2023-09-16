@@ -1,8 +1,11 @@
 import { reviewFormSchema } from "./reviewFormSchema";
-
+import ConfirmDialogue from "./ConfirmDialogue";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+
+import { CgSpinner } from "react-icons/cg";
+import { IconContext } from "react-icons";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -29,6 +32,9 @@ export default function ReviewForm({
   handleDeclineAndDelete,
   submissionId,
   pdfPath,
+  isDialogueOpen,
+  isDeclining,
+  isSubmitting,
 }) {
   const form = useForm<z.infer<typeof reviewFormSchema>>({
     resolver: zodResolver(reviewFormSchema),
@@ -203,14 +209,25 @@ export default function ReviewForm({
             />
 
             <div className="flex justify-between">
-              <Button type="submit">Accept</Button>
-              <Button
-                type="button"
-                variant={"destructive"}
-                onClick={handleDeclineAndDelete}
-              >
-                Decline
+              <Button disabled={isSubmitting} type="submit">
+                Accept{" "}
+                {isSubmitting && (
+                  <IconContext.Provider
+                    value={{
+                      size: "1.25rem",
+                      className: "ml-1 animate-spin",
+                    }}
+                  >
+                    <CgSpinner />
+                  </IconContext.Provider>
+                )}
               </Button>
+              <ConfirmDialogue
+                handleDeclineAndDelete={handleDeclineAndDelete}
+                isDialogueOpen={isDialogueOpen}
+                isDeclining={isDeclining}
+                isSubmitting={isSubmitting}
+              />
             </div>
           </form>
         </Form>

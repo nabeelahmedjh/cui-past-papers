@@ -14,6 +14,11 @@ from rest_framework.pagination import PageNumberPagination
 
 from .models import Contributor, PastPaper, Submission
 from .serializers import ContributorSerializer, SubmissionSerializer, PastPaperSerializer
+from .permissions import IsPostOrIsAuthenticated, IsGetOrIsAuthenticated
+
+from rest_framework.authentication import SessionAuthentication, TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
+
 
 
 from .helpers.utils import createContributor, deleteSubmission, getOrderByFields, paginateResponse
@@ -28,7 +33,8 @@ class DefaultPagination(PageNumberPagination):
 
 
 class SubmissionView(APIView):
-
+    authentication_classes = [SessionAuthentication, TokenAuthentication]
+    permission_classes = [IsPostOrIsAuthenticated]
 
     def get(self, request):
         submissions = Submission.objects.all()
@@ -51,7 +57,8 @@ class SubmissionView(APIView):
 
 class SubmissionDetailView(APIView):
 
-
+    authentication_classes = [SessionAuthentication, TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     def delete(self, request, pk):
 
 
@@ -91,6 +98,9 @@ class ContributorView(APIView):
 
 
 class PastPaperView(APIView):
+
+    authentication_classes = [SessionAuthentication, TokenAuthentication]
+    permission_classes = [IsGetOrIsAuthenticated]
 
 
     pagination_class = DefaultPagination

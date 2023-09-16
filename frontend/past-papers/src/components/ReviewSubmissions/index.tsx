@@ -10,6 +10,9 @@ export default function ReviewSubmissions() {
   }, []);
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isDeclining, setIsDeclining] = useState<boolean>(false);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [isDialogueOpen, setIsDialogueOpen] = useState<boolean>(true);
   const [submissions, setSubmissions] = useState<any[]>([]);
 
   const [displayedSubmissionIndex, setDisplayedSubmissionIndex] =
@@ -45,17 +48,15 @@ export default function ReviewSubmissions() {
       const submissionId = submissions[displayedSubmissionIndex]?.id;
       if (submissionId) {
         try {
-          console.log(`Submission with ID ${submissionId} declined`);
+          console.log(`Submission with ID ${submissionId} pending processing`);
 
           const response = await axios.delete(`/submissions/${submissionId}`);
-          if (response.status === 204) {
+          if (response.status < 300 && response.status >= 200) {
             console.log(
               `Submission with ID ${submissionId} deleted successfully`
             );
           } else {
-            console.error(
-              `Failed to delete submission with ID ${submissionId}`
-            );
+            console.log(`Failed to delete submission with ID ${submissionId}`);
           }
         } catch (error) {
           console.error(
@@ -68,7 +69,11 @@ export default function ReviewSubmissions() {
   };
 
   const handleDeclineAndDelete = async () => {
+    setIsDeclining(true);
+    setIsDialogueOpen(false);
     await delSubmission();
+    setIsDialogueOpen(true);
+    setIsDeclining(false);
     fetchSubmissions();
   };
 
@@ -76,6 +81,7 @@ export default function ReviewSubmissions() {
     if (submissions.length > 0) {
       const submissionId = submissions[displayedSubmissionIndex]?.id;
       if (submissionId) {
+        setIsSubmitting(true);
         try {
           console.log("Form data:", formData);
 
@@ -94,6 +100,7 @@ export default function ReviewSubmissions() {
         } catch (error) {
           console.log("Form submission failed:", error.response.data);
         }
+        setIsSubmitting(false);
       }
     }
   };
@@ -114,6 +121,9 @@ export default function ReviewSubmissions() {
                   submissionId={submissions[displayedSubmissionIndex]?.id}
                   handleNext={handleNext}
                   handleDeclineAndDelete={handleDeclineAndDelete}
+                  isDialogueOpen={isDialogueOpen}
+                  isDeclining={isDeclining}
+                  isSubmitting={isSubmitting}
                 />
               )}
               {pdfUrl && (

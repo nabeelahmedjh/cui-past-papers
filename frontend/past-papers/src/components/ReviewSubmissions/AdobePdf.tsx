@@ -1,19 +1,8 @@
-/*
-Copyright 2020 Adobe
-All Rights Reserved.
-
-NOTICE: Adobe permits you to use, modify, and distribute this file in
-accordance with the terms of the Adobe license agreement accompanying
-it. If you have received this file from a source other than Adobe,
-then your use, modification, or distribution of it requires the prior
-written permission of Adobe.
-*/
-
-import { Component } from "react";
+import React, { useEffect } from "react";
 import ViewSDKClient from "./ViewSDKClient";
 
-class AdobePDF extends Component {
-  componentDidMount() {
+function AdobePDF({ url }) {
+  useEffect(() => {
     const viewSDKClient = new ViewSDKClient();
     viewSDKClient.ready().then(() => {
       /* Invoke file preview */
@@ -23,14 +12,13 @@ class AdobePDF extends Component {
           /* Pass the embed mode option here */
           embedMode: "IN_LINE",
         },
-        this.props.url
+        url
       );
+      // console.log(url);
     });
-  }
+  }, [url]);
 
-  render() {
-    return <div id="pdf-div" className="w-full h-[33rem] lg:h-[95%] "></div>;
-  }
+  return <div id="pdf-div" className="w-full h-[33rem] lg:h-[95%]"></div>;
 }
 
 export default AdobePDF;

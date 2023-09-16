@@ -90,7 +90,7 @@ class ContributorView(APIView):
 
 
 
-class PaperPaperView(APIView):
+class PastPaperView(APIView):
 
 
     pagination_class = DefaultPagination
@@ -162,7 +162,7 @@ class PaperPaperView(APIView):
         return Response(paginated_response, status=status.HTTP_200_OK)
     
     
-class PaperPaperDetailView(APIView):
+class PastPaperDetailView(APIView):
 
 
     def get(self, request, pk):

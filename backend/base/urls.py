@@ -6,8 +6,8 @@ urlpatterns = [
     path('submissions/<int:pk>',views.SubmissionDetailView.as_view(), name='submission-detail'),
 
     
-    path('past-papers/',views.PaperPaperView.as_view(), name='past-papers'),
-    path('past-papers/<int:pk>',views.PaperPaperDetailView.as_view(), name='past-papers-detail'),
+    path('past-papers/',views.PastPaperView.as_view(), name='past-papers'),
+    path('past-papers/<int:pk>',views.PastPaperDetailView.as_view(), name='past-papers-detail'),
 
 
     path('contributors/', views.ContributorView.as_view(), name='contributors')

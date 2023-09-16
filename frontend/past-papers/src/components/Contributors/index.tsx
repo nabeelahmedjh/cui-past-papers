@@ -2,6 +2,9 @@ import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import ContCard from "./ContCard";
 
+import { CgSpinner } from "react-icons/cg";
+import { IconContext } from "react-icons";
+
 function App() {
   const [contributors, setContributors] = useState([]);
   const [nextPageUrl, setNextPageUrl] = useState("");
@@ -86,7 +89,19 @@ function App() {
             ))}
           </div>
           <div ref={observerRef}>
-            {isLoading && <p className="text-center text-xl">Loading...</p>}
+            {isLoading && (
+              <p className="text-center text-xl">
+                {" "}
+                <IconContext.Provider
+                  value={{
+                    size: "4rem",
+                    className: "ml-1 animate-spin ml-auto mr-0 inline-block",
+                  }}
+                >
+                  <CgSpinner />
+                </IconContext.Provider>
+              </p>
+            )}
           </div>
           {!isLoading && nextPageUrl === null && (
             <p className="text-center text-3xl pb-8">No more contributors.</p>

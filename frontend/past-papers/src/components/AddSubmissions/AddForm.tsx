@@ -3,6 +3,10 @@ import { addFormSchema } from "./addFormSchema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
+
+import { CgSpinner } from "react-icons/cg";
+import { IconContext } from "react-icons";
+
 import {
   Form,
   FormControl,
@@ -23,6 +27,7 @@ export default function AddForm() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [successAlert, setSuccessAlert] = useState(false);
   const [failedAlert, setfailedAlert] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [failedAlertMessage, setfailedAlertMessage] = useState(null);
 
   const form = useForm<z.infer<typeof addFormSchema>>({
@@ -50,10 +55,11 @@ export default function AddForm() {
       formData.append("linkedIn", values.linkedIn);
       formData.append("file", selectedFile);
       console.log("Form Values: ", formData);
-
       try {
+        setIsSubmitting(true);
         const response = await axios.post("/submissions/", formData);
         console.log("Server Response: ", response.data);
+        setIsSubmitting(false);
         if (response.status === 201) {
           // alert(
           //   "Your submission is sent successfully and will be approved soon."
@@ -66,6 +72,7 @@ export default function AddForm() {
         }
         // Handle the server response as needed
       } catch (error) {
+        setIsSubmitting(false);
         console.log("Error uploading form:", error);
 
         if (error.response.status === 400) {
@@ -178,8 +185,22 @@ export default function AddForm() {
               )}
             />
 
-            <Button className="w-1/2 ml-[25%]" type="submit">
-              Add Submission
+            <Button
+              disabled={isSubmitting}
+              className="w-1/2 ml-[25%]"
+              type="submit"
+            >
+              Add Submission{" "}
+              {isSubmitting && (
+                <IconContext.Provider
+                  value={{
+                    size: "1.25rem",
+                    className: "ml-1 animate-spin",
+                  }}
+                >
+                  <CgSpinner />
+                </IconContext.Provider>
+              )}
             </Button>
           </form>
         </Form>

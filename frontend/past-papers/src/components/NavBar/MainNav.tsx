@@ -2,6 +2,7 @@ import ModeToggle from "./ModeToggle";
 
 import { useLocation, Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
+import LogoutButton from "./LogoutButton";
 
 export default function MainNav() {
   const currentPath = useLocation().pathname;
@@ -68,7 +69,8 @@ export default function MainNav() {
             About
           </Link>
         </nav>
-        <div className=" flex-shrink-0 mr-2">
+        <div className=" flex-shrink-0 mr-2 flex">
+          <LogoutButton />
           <ModeToggle />
         </div>
       </div>

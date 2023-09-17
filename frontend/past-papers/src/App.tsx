@@ -12,6 +12,7 @@ import Contributors from "./components/Contributors";
 import About from "./components/About";
 import PastPapers from "./components/PastPapers";
 import PaperViewer from "./components/PastPapers/PaperViewer";
+import Login from "./components/Login";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/review-submissions" element={<ReviewSubmissions />} />
+          <Route path="/sensei" element={<Login />} />
           <Route path="/add-submissions" element={<AddSubmissions />} />
           <Route path="/contributors" element={<Contributors />} />
           <Route path="/about" element={<About />} />

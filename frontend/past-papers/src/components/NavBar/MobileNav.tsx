@@ -14,6 +14,7 @@ import {
 import { useLocation, Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
+import LogoutButton from "./LogoutButton";
 
 export default function MobileNav() {
   const currentPath = useLocation().pathname;
@@ -103,6 +104,7 @@ export default function MobileNav() {
           </SheetHeader>
         </SheetContent>
       </Sheet>
+      <LogoutButton />
       <ModeToggle />
     </div>
   );

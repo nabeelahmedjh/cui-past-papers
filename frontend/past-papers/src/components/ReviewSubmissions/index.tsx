@@ -1,7 +1,9 @@
+import { useNavigate } from "react-router-dom";
 import AdobePdf from "./AdobePdf";
 import ReviewForm from "./ReviewForm/ReviewForm";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 export default function ReviewSubmissions() {
   // Set HTML Document Title
@@ -22,6 +24,8 @@ export default function ReviewSubmissions() {
     submissions[displayedSubmissionIndex]?.file || ""
   }`;
 
+  axios.defaults.baseURL = `${import.meta.env.VITE_DJANGO_SERVER_URL}/api`;
+
   useEffect(() => {
     fetchSubmissions();
   }, []);
@@ -32,9 +36,23 @@ export default function ReviewSubmissions() {
     }
   }, [submissions]);
 
+  const authToken = Cookies.get("authToken");
+  const navigate = useNavigate(); // Initialize the navigate function
+
+  useEffect(() => {
+    if (!authToken) {
+      // If authToken is not valid, redirect to the login page
+      navigate("/sensei");
+    }
+  }, [authToken, navigate]);
+
   const fetchSubmissions = async () => {
     try {
-      const response = await axios.get("/submissions/");
+      const response = await axios.get("/submissions/", {
+        headers: {
+          Authorization: `Token ${authToken}`,
+        },
+      });
       const data = response.data;
       setSubmissions(data);
     } catch (error) {
@@ -50,7 +68,11 @@ export default function ReviewSubmissions() {
         try {
           console.log(`Submission with ID ${submissionId} pending processing`);
 
-          const response = await axios.delete(`/submissions/${submissionId}`);
+          const response = await axios.delete(`/submissions/${submissionId}`, {
+            headers: {
+              Authorization: `Token ${authToken}`,
+            },
+          });
           if (response.status < 300 && response.status >= 200) {
             console.log(
               `Submission with ID ${submissionId} deleted successfully`
@@ -85,7 +107,11 @@ export default function ReviewSubmissions() {
         try {
           console.log("Form data:", formData);
 
-          const response = await axios.post("/past-papers/", formData);
+          const response = await axios.post("/past-papers/", formData, {
+            headers: {
+              Authorization: `Token ${authToken}`,
+            },
+          });
           console.log(response.data);
           if (response.status >= 200 && response.status < 300) {
             console.log("Form submitted successfully");

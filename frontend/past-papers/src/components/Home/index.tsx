@@ -12,11 +12,7 @@ export default function Home() {
       <p className="mb-4 text-xl lg:text-2xl">
         Beginning of something great ( ͡° ͜ʖ ͡°)
       </p>
-      <Button
-        size="lg"
-        onClick={() => alert("No biches for you 👈(ﾟヮﾟ👈)")}
-        className=""
-      >
+      <Button size="lg" onClick={() => alert(":)")} className="">
         Surprise
       </Button>
     </div>

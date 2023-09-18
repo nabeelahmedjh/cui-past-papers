@@ -56,7 +56,16 @@ export default function ReviewSubmissions() {
       const data = response.data;
       setSubmissions(data);
     } catch (error) {
-      console.error("Error fetching submissions:", error);
+      if (error.response && error.response.status === 403) {
+        // If the server returns a 403 Forbidden response, it means the authToken is invalid
+        // Delete the authToken cookie
+        Cookies.remove("authToken");
+
+        // Redirect to the login page
+        navigate("/sensei");
+      } else {
+        console.error("Error fetching submissions:", error);
+      }
     }
     setIsLoading(false);
   };
@@ -81,10 +90,19 @@ export default function ReviewSubmissions() {
             console.log(`Failed to delete submission with ID ${submissionId}`);
           }
         } catch (error) {
-          console.error(
-            `Error declining or deleting submission with ID ${submissionId}:`,
-            error
-          );
+          if (error.response && error.response.status === 403) {
+            // If the server returns a 403 Forbidden response, it means the authToken is invalid
+            // Delete the authToken cookie
+            Cookies.remove("authToken");
+
+            // Redirect to the login page
+            navigate("/sensei");
+          } else {
+            console.error(
+              `Error declining or deleting submission with ID ${submissionId}:`,
+              error
+            );
+          }
         }
       }
     }
@@ -124,7 +142,16 @@ export default function ReviewSubmissions() {
             );
           }
         } catch (error) {
-          console.log("Form submission failed:", error.response.data);
+          if (error.response && error.response.status === 403) {
+            // If the server returns a 403 Forbidden response, it means the authToken is invalid
+            // Delete the authToken cookie
+            Cookies.remove("authToken");
+
+            // Redirect to the login page
+            navigate("/sensei");
+          } else {
+            console.log("Form submission failed:", error.response.data);
+          }
         }
         setIsSubmitting(false);
       }

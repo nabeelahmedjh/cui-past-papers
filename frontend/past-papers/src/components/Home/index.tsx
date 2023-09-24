@@ -1,5 +1,7 @@
-import { Button } from "@/components/ui/button";
 import { useEffect } from "react";
+
+import Hero from "./Hero";
+// import TopContributors from "./TopContributors";
 
 export default function Home() {
   // Set HTML Document Title
@@ -8,13 +10,9 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="flex flex-col items-center lg:mt-48">
-      <p className="mb-4 text-xl lg:text-2xl">
-        Beginning of something great ( ͡° ͜ʖ ͡°)
-      </p>
-      <Button size="lg" onClick={() => alert(":)")} className="">
-        Surprise
-      </Button>
-    </div>
+    <>
+      <Hero />
+      {/* <TopContributors /> */}
+    </>
   );
 }

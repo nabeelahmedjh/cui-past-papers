@@ -3,8 +3,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@/components/theme-provider";
 import NavBar from "./components/NavBar";
 
-import "./App.css";
-
 import Home from "./components/Home";
 import ReviewSubmissions from "./components/ReviewSubmissions";
 import AddSubmissions from "./components/AddSubmissions";

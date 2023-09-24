@@ -24,6 +24,7 @@ module.exports = {
       },
       fontFamily: {
         monsterrat: ["Montserrat", "sans-serif"],
+        lora: ["Lora", "serif"],
       },
       colors: {
         border: "hsl(var(--border))",

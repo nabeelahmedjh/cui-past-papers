@@ -1,0 +1,20 @@
+.gradient-card {
+  position: relative;
+  background-clip: padding-box;
+  border: solid 0.3rem transparent;
+  border-radius: 1rem;
+}
+.gradient-card:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  margin: -5px;
+  /* !importanté */
+  border-radius: inherit;
+  /* !importanté */
+  background: linear-gradient(to right, red, orange);
+}

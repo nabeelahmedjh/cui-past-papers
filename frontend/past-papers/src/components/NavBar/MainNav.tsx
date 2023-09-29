@@ -9,7 +9,7 @@ export default function MainNav() {
 
   return (
     <div className="flex justify-center">
-      <div className="mt-4 mb-12 min-[760px]:flex items-center justify-between hidden w-full max-w-5xl gap-x-20">
+      <div className="mt-4 mb-12 min-[860px]:flex items-center justify-between hidden w-full max-w-5xl gap-x-20">
         <p className="text-3xl flex-shrink-0 ml-2">📄</p>
         <nav className="flex items-center space-x-6 text-md font-medium flex-shrink-0">
           <Link

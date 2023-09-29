@@ -21,13 +21,13 @@ export default function MobileNav() {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="flex justify-between mx-4 mb-8 mt-4 min-[760px]:hidden">
+    <div className="flex justify-between mx-4 mb-8 mt-4 min-[860px]:hidden">
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger>
           <Button
             variant="outline"
             size="icon"
-            className="px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 md:hidden"
+            className="px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0"
           >
             <LuAlignLeft className="h-5 w-5" />
             <span className="sr-only">Toggle Menu</span>

@@ -13,8 +13,8 @@ import "./TopCard.css";
 export default function TopContributors({ contributors }) {
   return (
     <>
-      <h1 className="text-center text-3xl mt-16">Our Top Contributors</h1>
-      <div className="mx-2 sm:mx-8 flex flex-col relative sm:flex-row sm:justify-center mt-8 gap-8 items-center">
+      <h1 className="text-center text-4xl mt-32 mb-16">Top contributors</h1>
+      <div className="mx-2 sm:mx-8 flex flex-col relative min-[740px]:flex-row sm:justify-center mt-8 gap-8 items-center">
         {contributors.map((card) => (
           <TopCard
             key={card.id}

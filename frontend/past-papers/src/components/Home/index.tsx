@@ -4,6 +4,7 @@ import axios from "axios";
 import Hero from "./Hero";
 import TopContributors from "./TopContributors";
 import Features from "./Features";
+import ContributeSteps from "./ContributeSteps";
 
 /////////////////////////////////////////////////
 ////////////////////////////////////////////////
@@ -33,6 +34,7 @@ export default function Home() {
       <Hero />
       <TopContributors contributors={contributors} />
       <Features />
+      <ContributeSteps />
       <h1 className="my-16 text-center text-3xl">Footer Dummy</h1>
     </>
   );

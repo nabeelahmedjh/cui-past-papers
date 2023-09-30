@@ -14,7 +14,7 @@ import Login from "./components/Login";
 
 function App() {
   return (
-    <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <BrowserRouter>
         <NavBar />
         <Routes>

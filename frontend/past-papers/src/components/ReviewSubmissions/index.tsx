@@ -4,6 +4,11 @@ import ReviewForm from "./ReviewForm/ReviewForm";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+/////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
 
 export default function ReviewSubmissions() {
   // Set HTML Document Title
@@ -86,8 +91,10 @@ export default function ReviewSubmissions() {
             console.log(
               `Submission with ID ${submissionId} deleted successfully`
             );
+            toast.success("Submission Deleted!");
           } else {
             console.log(`Failed to delete submission with ID ${submissionId}`);
+            toast.error("Error occurred while processing submission.");
           }
         } catch (error) {
           if (error.response && error.response.status === 403) {
@@ -102,6 +109,7 @@ export default function ReviewSubmissions() {
               `Error declining or deleting submission with ID ${submissionId}:`,
               error
             );
+            toast.error("Something went wrong, try again!");
           }
         }
       }
@@ -133,6 +141,7 @@ export default function ReviewSubmissions() {
           console.log(response.data);
           if (response.status >= 200 && response.status < 300) {
             console.log("Form submitted successfully");
+            toast.success("Submission Accepted!");
             // await delSubmission();
             fetchSubmissions();
           } else {
@@ -140,6 +149,7 @@ export default function ReviewSubmissions() {
               "Form submission failed with status:",
               response.status
             );
+            toast.error("Error occurred while processing submission.");
           }
         } catch (error) {
           if (error.response && error.response.status === 403) {
@@ -151,6 +161,7 @@ export default function ReviewSubmissions() {
             navigate("/sensei");
           } else {
             console.log("Form submission failed:", error.response.data);
+            toast.error("Something went wrong, try again!");
           }
         }
         setIsSubmitting(false);
@@ -164,6 +175,7 @@ export default function ReviewSubmissions() {
 
   return (
     <>
+      <ToastContainer />
       {!isLoading && (
         <div className="lg:flex lg:gap-5 lg:justify-end">
           {submissions.length > 0 ? (
@@ -191,7 +203,7 @@ export default function ReviewSubmissions() {
               )}
             </>
           ) : (
-            <h1 className="text-2xl mr-[42%] mt-[5%]">
+            <h1 className="text-2xl text-center sm:mr-[37%] mt-[40%] sm:mt-[15%]">
               No submissions left to review
             </h1>
           )}

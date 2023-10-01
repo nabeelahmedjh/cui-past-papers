@@ -26,6 +26,15 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/past-papers" element={<PastPapers />} />
           <Route path="/past-papers/pdf-viewer/:id" element={<PaperViewer />} />
+          <Route
+            path="*"
+            element={
+              <h1 className="text-3xl text-center mt-4">
+                ⚠️ Oops! Page not Found <br />
+                <br /> Did you mean to go to some other place?
+              </h1>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>

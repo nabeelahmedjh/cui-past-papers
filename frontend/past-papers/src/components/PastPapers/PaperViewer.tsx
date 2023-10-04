@@ -8,7 +8,14 @@ import { CgSpinner } from "react-icons/cg";
 import { IconContext } from "react-icons";
 
 export default function PaperViewer() {
-  const [paperData, setPaperData] = useState();
+  const [paperData, setPaperData] = useState<{
+    course_code: string;
+    course_title: string;
+    instructor_name: string;
+    exam_type: string;
+    year: number;
+    campus: string;
+  }>();
   const [url, setUrl] = useState(``);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -32,7 +39,7 @@ export default function PaperViewer() {
     fetchData();
   }, [paperId]);
 
-  const campusChoices = {
+  const campusChoices: Record<string, string> = {
     ISB: "Islamabad",
     LHR: "Lahore",
     SWL: "Sahiwal",
@@ -43,18 +50,18 @@ export default function PaperViewer() {
     virtual: "Virtual",
   };
 
-  const examTypeChoices = {
+  const examTypeChoices: Record<string, string> = {
     M: "Midterm",
     T: "Terminal",
     S1: "Sessional 1",
     S2: "Sessional 2",
   };
 
-  function getCampusName(campusCode) {
+  function getCampusName(campusCode: string): string {
     return campusChoices[campusCode] || "Unknown Campus";
   }
 
-  function getExamTypeName(examTypeCode) {
+  function getExamTypeName(examTypeCode: string): string {
     return examTypeChoices[examTypeCode] || "Unknown Exam Type";
   }
 

@@ -13,7 +13,17 @@ import { IconContext } from "react-icons";
 /////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-export default function TopContributors({ contributors, isLoading }) {
+export default function TopContributors({
+  contributors,
+  isLoading,
+}: {
+  contributors: Array<{
+    id: number;
+    name: string;
+    linkedIn: string;
+  }>;
+  isLoading: boolean;
+}) {
   return (
     <>
       <h1 className="text-center text-4xl mt-32 mb-16">Top contributors</h1>
@@ -31,14 +41,16 @@ export default function TopContributors({ contributors, isLoading }) {
         </p>
       ) : (
         <div className="mx-2 sm:mx-8 flex flex-col relative min-[740px]:flex-row sm:justify-center mt-8 gap-8 items-center">
-          {contributors.map((card) => (
-            <TopCard
-              key={card.id}
-              name={card.name}
-              image={`https://api.dicebear.com/6.x/croodles/svg?scale=150&seed=${card.id}`}
-              linkedIn={card.linkedIn}
-            />
-          ))}
+          {contributors.map(
+            (card: { id: number; name: string; linkedIn: string }) => (
+              <TopCard
+                key={card.id}
+                name={card.name}
+                image={`https://api.dicebear.com/6.x/croodles/svg?scale=150&seed=${card.id}`}
+                linkedIn={card.linkedIn}
+              />
+            )
+          )}
         </div>
       )}
     </>

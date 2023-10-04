@@ -5,12 +5,19 @@ import ContCard from "./ContCard";
 import { CgSpinner } from "react-icons/cg";
 import { IconContext } from "react-icons";
 
+interface Contributor {
+  id: number;
+  name: string;
+  linkedIn: string;
+}
+
 function App() {
-  const [contributors, setContributors] = useState([]);
+  const [contributors, setContributors] = useState<Contributor[]>([]);
   const [nextPageUrl, setNextPageUrl] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const observerRef = useRef();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const observerRef: any = useRef();
 
   useEffect(() => {
     document.title = "Contributors";
@@ -32,12 +39,14 @@ function App() {
 
     return () => {
       if (observerRef.current) {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         observer.unobserve(observerRef.current);
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contributors]);
 
-  const handleObserver = (entries) => {
+  const handleObserver = (entries: IntersectionObserverEntry[]) => {
     const target = entries[0];
     if (target.isIntersecting && nextPageUrl && !isLoading) {
       fetchMoreContributors();
@@ -79,14 +88,16 @@ function App() {
       <div className="self-center max-w-5xl w-full">
         <div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 sm:gap-12 m-8">
-            {contributors.map((card) => (
-              <ContCard
-                key={card.id}
-                name={card.name}
-                image={`https://api.dicebear.com/6.x/croodles/svg?scale=150&seed=${card.id}`}
-                linkedIn={card.linkedIn}
-              />
-            ))}
+            {contributors?.map(
+              (card: { id: number; name: string; linkedIn: string }) => (
+                <ContCard
+                  key={card.id}
+                  name={card.name}
+                  image={`https://api.dicebear.com/6.x/croodles/svg?scale=150&seed=${card.id}`}
+                  linkedIn={card.linkedIn}
+                />
+              )
+            )}
           </div>
           <div ref={observerRef}>
             {isLoading && (

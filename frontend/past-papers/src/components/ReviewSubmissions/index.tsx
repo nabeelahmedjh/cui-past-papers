@@ -20,6 +20,7 @@ export default function ReviewSubmissions() {
   const [isDeclining, setIsDeclining] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [isDialogueOpen, setIsDialogueOpen] = useState<boolean>(true);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [submissions, setSubmissions] = useState<any[]>([]);
 
   const [displayedSubmissionIndex, setDisplayedSubmissionIndex] =
@@ -33,6 +34,7 @@ export default function ReviewSubmissions() {
 
   useEffect(() => {
     fetchSubmissions();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -60,7 +62,8 @@ export default function ReviewSubmissions() {
       });
       const data = response.data;
       setSubmissions(data);
-    } catch (error) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
       if (error.response && error.response.status === 403) {
         // If the server returns a 403 Forbidden response, it means the authToken is invalid
         // Delete the authToken cookie
@@ -96,7 +99,8 @@ export default function ReviewSubmissions() {
             console.log(`Failed to delete submission with ID ${submissionId}`);
             toast.error("Error occurred while processing submission.");
           }
-        } catch (error) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (error: any) {
           if (error.response && error.response.status === 403) {
             // If the server returns a 403 Forbidden response, it means the authToken is invalid
             // Delete the authToken cookie
@@ -125,7 +129,7 @@ export default function ReviewSubmissions() {
     fetchSubmissions();
   };
 
-  const handleNext = async (formData) => {
+  const handleNext = async (formData: object) => {
     if (submissions.length > 0) {
       const submissionId = submissions[displayedSubmissionIndex]?.id;
       if (submissionId) {
@@ -151,7 +155,8 @@ export default function ReviewSubmissions() {
             );
             toast.error("Error occurred while processing submission.");
           }
-        } catch (error) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (error: any) {
           if (error.response && error.response.status === 403) {
             // If the server returns a 403 Forbidden response, it means the authToken is invalid
             // Delete the authToken cookie

@@ -23,12 +23,17 @@ import { useState } from "react";
 import { SuccessAlert } from "./SuccessAlert";
 import { FailedAlert } from "./FailedAlert";
 
+import * as React from "react";
+
+////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
+
 export default function AddForm() {
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFile, setSelectedFile] = useState<File>();
   const [successAlert, setSuccessAlert] = useState(false);
   const [failedAlert, setfailedAlert] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [failedAlertMessage, setfailedAlertMessage] = useState(null);
+  const [failedAlertMessage, setfailedAlertMessage] = useState("");
 
   const form = useForm<z.infer<typeof addFormSchema>>({
     resolver: zodResolver(addFormSchema),
@@ -40,11 +45,11 @@ export default function AddForm() {
     },
   });
 
-  const handleFileChange = (event) => {
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
     event.target.classList.remove("bg-accent");
-    console.log(event.target.files[0]);
-    setSelectedFile(event.target.files[0]);
+    console.log(event.target.files?.[0]);
+    setSelectedFile(event.target.files?.[0]);
   };
 
   async function onSubmit(values: z.infer<typeof addFormSchema>) {
@@ -71,12 +76,13 @@ export default function AddForm() {
           // }
         }
         // Handle the server response as needed
-      } catch (error) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (error: any) {
         setIsSubmitting(false);
         console.log("Error uploading form:", error);
 
         if (error.response.status === 400) {
-          const errorMessage = error.response.data
+          const errorMessage: string = error.response.data
             ? error.response.data.file[0]
             : "Please check your form again";
           // alert(errorMessage);
@@ -169,11 +175,13 @@ export default function AddForm() {
                       onChange={handleFileChange}
                       onDragOver={(e) => {
                         e.preventDefault();
-                        e.target.classList.add("bg-accent"); // This will be your Tailwind CSS class
+                        const target = e.target as HTMLInputElement;
+                        target.classList.add("bg-accent");
                       }}
                       onDragLeave={(e) => {
                         e.preventDefault();
-                        e.target.classList.remove("bg-accent"); // This will be your Tailwind CSS class
+                        const target = e.target as HTMLInputElement;
+                        target.classList.remove("bg-accent");
                       }}
                     />
                   </FormControl>

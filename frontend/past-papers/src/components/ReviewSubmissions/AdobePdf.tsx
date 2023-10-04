@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import ViewSDKClient from "./ViewSDKClient";
 
-function AdobePDF({ url }) {
+function AdobePDF({ url }: { url: string }) {
   useEffect(() => {
     const viewSDKClient = new ViewSDKClient();
     viewSDKClient.ready().then(() => {

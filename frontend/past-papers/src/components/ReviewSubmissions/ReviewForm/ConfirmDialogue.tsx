@@ -22,6 +22,11 @@ export default function ConfirmDialogue({
   isDialogueOpen,
   isDeclining,
   isSubmitting,
+}: {
+  handleDeclineAndDelete: () => Promise<void>;
+  isDialogueOpen: boolean;
+  isDeclining: boolean;
+  isSubmitting: boolean;
 }) {
   const [open, setOpen] = useState(false);
   // console.log("Dialogue open: ", open);

@@ -40,7 +40,10 @@ export default function Login() {
     },
   });
 
-  const postLogin = async (formData) => {
+  const postLogin = async (formData: {
+    username: string;
+    password: string;
+  }) => {
     setIsSubmitting(true);
     try {
       const response = await axios.post("/login/", formData);
@@ -60,14 +63,15 @@ export default function Login() {
         console.error("Form submission failed with status:", response.status);
         setError("Invalid username or password."); // Set the error message
       }
-    } catch (error) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
       console.log("Form submission failed:", error.response.data);
       setError("Invalid username or password."); // Set the error message
     }
     setIsSubmitting(false);
   };
 
-  function onSubmit(values) {
+  function onSubmit(values: { username: string; password: string }) {
     const formData = {
       username: values.username,
       password: values.password,

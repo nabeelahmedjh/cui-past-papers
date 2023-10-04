@@ -8,7 +8,13 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 
-export function FailedAlert({ message, toggle }) {
+export function FailedAlert({
+  message,
+  toggle,
+}: {
+  message: string;
+  toggle: (arg0: boolean) => void;
+}) {
   return (
     <AlertDialog defaultOpen={true}>
       <AlertDialogContent className=" w-[80%]">

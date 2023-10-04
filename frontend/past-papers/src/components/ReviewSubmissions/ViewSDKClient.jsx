@@ -8,7 +8,7 @@ it. If you have received this file from a source other than Adobe,
 then your use, modification, or distribution of it requires the prior
 written permission of Adobe.
 */
-const client_id: string = import.meta.env.VITE_ADOBE_PDF_CLIENT_ID;
+const client_id = import.meta.env.VITE_ADOBE_PDF_CLIENT_ID;
 class ViewSDKClient {
   constructor() {
     this.readyPromise = new Promise((resolve) => {

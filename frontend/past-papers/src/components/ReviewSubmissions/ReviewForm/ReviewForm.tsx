@@ -35,6 +35,14 @@ export default function ReviewForm({
   isDialogueOpen,
   isDeclining,
   isSubmitting,
+}: {
+  handleNext: (formData: object) => Promise<void>;
+  handleDeclineAndDelete: () => Promise<void>;
+  submissionId: number;
+  pdfPath: string;
+  isDialogueOpen: boolean;
+  isDeclining: boolean;
+  isSubmitting: boolean;
 }) {
   const form = useForm<z.infer<typeof reviewFormSchema>>({
     resolver: zodResolver(reviewFormSchema),

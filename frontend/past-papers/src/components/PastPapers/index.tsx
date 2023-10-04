@@ -11,7 +11,11 @@ import { CgSpinner } from "react-icons/cg";
 import { IconContext } from "react-icons";
 
 export default function PastPapers() {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<{
+    results: [];
+    previous: string;
+    next: string;
+  }>();
   const [isFiltered, setIsFiltered] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [url, setUrl] = useState(`/past-papers/`);
@@ -32,7 +36,7 @@ export default function PastPapers() {
     fetchData();
   }, [url]);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (searchQuery !== "") {
@@ -47,7 +51,7 @@ export default function PastPapers() {
 
   return (
     <div className="flex justify-center">
-      {!isLoading && data.results && (
+      {!isLoading && data?.results && (
         <div className="max-w-5xl w-full mx-1">
           <div className="flex  justify-center gap-4 mb-8">
             <form
@@ -85,22 +89,22 @@ export default function PastPapers() {
               ""
             )}
           </div>
-          {data.results && <PaperCard papers={data.results} />}
+          {data?.results && <PaperCard papers={data?.results} />}
           <div className="relative ml-3 mt-4">
-            {data.previous && (
+            {data?.previous && (
               <Button
                 className=" absolute hover:bg-inherit sm:hover:bg-accent"
-                onClick={() => setUrl(data.previous)}
+                onClick={() => setUrl(data?.previous)}
                 variant="outline"
                 size="icon"
               >
                 <ChevronLeft className="h-4 w-4" />
               </Button>
             )}
-            {data.next && (
+            {data?.next && (
               <Button
                 className=" absolute left-12 hover:bg-inherit sm:hover:bg-accent"
-                onClick={() => setUrl(data.next)}
+                onClick={() => setUrl(data?.next)}
                 variant="outline"
                 size="icon"
               >

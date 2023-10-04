@@ -6,24 +6,41 @@ import { LinkedInLogoIcon } from "@radix-ui/react-icons";
 
 import "./TopCard.css";
 
+import { CgSpinner } from "react-icons/cg";
+import { IconContext } from "react-icons";
+
 /////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-export default function TopContributors({ contributors }) {
+export default function TopContributors({ contributors, isLoading }) {
   return (
     <>
       <h1 className="text-center text-4xl mt-32 mb-16">Top contributors</h1>
-      <div className="mx-2 sm:mx-8 flex flex-col relative min-[740px]:flex-row sm:justify-center mt-8 gap-8 items-center">
-        {contributors.map((card) => (
-          <TopCard
-            key={card.id}
-            name={card.name}
-            image={`https://api.dicebear.com/6.x/croodles/svg?scale=150&seed=${card.id}`}
-            linkedIn={card.linkedIn}
-          />
-        ))}
-      </div>
+      {isLoading ? (
+        <p className="text-center text-xl">
+          {" "}
+          <IconContext.Provider
+            value={{
+              size: "4rem",
+              className: "ml-1 animate-spin ml-auto mr-0 inline-block",
+            }}
+          >
+            <CgSpinner />
+          </IconContext.Provider>
+        </p>
+      ) : (
+        <div className="mx-2 sm:mx-8 flex flex-col relative min-[740px]:flex-row sm:justify-center mt-8 gap-8 items-center">
+          {contributors.map((card) => (
+            <TopCard
+              key={card.id}
+              name={card.name}
+              image={`https://api.dicebear.com/6.x/croodles/svg?scale=150&seed=${card.id}`}
+              linkedIn={card.linkedIn}
+            />
+          ))}
+        </div>
+      )}
     </>
   );
 }

@@ -11,6 +11,7 @@ import ContributeSteps from "./ContributeSteps";
 
 export default function Home() {
   const [contributors, setContributors] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Set HTML Document Title
   useEffect(() => {
@@ -20,10 +21,13 @@ export default function Home() {
 
   const fetchContributors = async () => {
     try {
+      setIsLoading(true);
+
       const response = await axios.get(
         "/contributors?page_size=3&order_by=-contribution_count,name"
       );
       setContributors(response.data.results);
+      setIsLoading(false);
     } catch (error) {
       console.error("Error fetching contributors:", error);
     }
@@ -32,10 +36,9 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <TopContributors contributors={contributors} />
+      <TopContributors contributors={contributors} isLoading={isLoading} />
       <Features />
       <ContributeSteps />
-      <h1 className="my-16 text-center text-3xl">Footer Dummy</h1>
     </>
   );
 }

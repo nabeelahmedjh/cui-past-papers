@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import { ThemeProvider } from "@/components/theme-provider";
 import NavBar from "./components/NavBar";
+import Footer from "./components/Footer";
 
 import Home from "./components/Home";
 import ReviewSubmissions from "./components/ReviewSubmissions";
@@ -36,6 +37,7 @@ function App() {
             }
           />
         </Routes>
+        <Footer />
       </BrowserRouter>
     </ThemeProvider>
   );

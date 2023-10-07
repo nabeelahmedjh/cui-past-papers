@@ -32,13 +32,15 @@ jobs:
           npm run build
 
       - name: Create a zip file from the dist directory
-        run: tar -czvf release.zip -C ./dist .
-
+        run: |
+          mkdir -p ./dist-zip
+          tar -czvf ./dist-zip/release.zip -C ./dist .
+        
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
           name: frontend-app
-          path: release.zip
+          path: ./dist-zip/release.zip
 
   deploy:
     runs-on: ubuntu-latest

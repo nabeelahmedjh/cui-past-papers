@@ -1,7 +1,4 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
-name: Build and deploy Node.js app to Azure Web App - paperhub
+name: Build, Zip, and Deploy Frontend of Node.js app to Azure Web App - paperhub
 
 on:
   push:
@@ -13,25 +10,37 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    env:
+      WORKING_DIRECTORY: ./frontend/past-papers  # Define the working directory environment variable
+
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
       - name: Set up Node.js version
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2
         with:
           node-version: '18.x'
 
-      - name: npm install, build, and test
+      - name: Install dependencies and build
         run: |
+          cd $WORKING_DIRECTORY  # Change to the working directory
           npm install
-          npm run build --if-present
-          npm run test --if-present
+          npm run build
+
+      # Zip the build directory
+      - name: Zip Release
+        uses: TheDoctor0/zip-release@0.6.1
+        with:
+          filename: release.zip
+          directory: ./frontend/past-papers
+          path: dist/*  # Use the working directory for the path
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
-          name: node-app
-          path: .
+          name: frontend-app
+          path: ./frontend/past-papers/release.zip
 
   deploy:
     runs-on: ubuntu-latest
@@ -39,18 +48,17 @@ jobs:
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-
+    
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v2
         with:
-          name: node-app
+          name: frontend-app
 
-      - name: 'Deploy to Azure Web App'
-        id: deploy-to-webapp
+      - name: Deploy frontend to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
           app-name: 'paperhub'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_24F95AC024FD41458D5B4B67DD8ECB45 }}
-          package: .
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0CA1F20F535D4E95832381DDD648768C }}
+          package: release.zip

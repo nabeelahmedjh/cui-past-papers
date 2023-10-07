@@ -34,10 +34,11 @@ jobs:
       # Zip the build directory
       - name: Zip Release
         working-directory: ./frontend/past-papers  # Set working directory for this step
-        uses: TheDoctor0/zip-release@0.6.1
-        with:
-          filename: release.zip
-          path: ./dist/*
+        run: |
+          TheDoctor0/zip-release@0.6.1
+          with:
+            filename: release.zip
+            path: ./dist/*
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2

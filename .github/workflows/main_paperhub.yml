@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  build_and_deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -41,3 +41,22 @@ jobs:
         with:
           name: frontend-app
           path: frontend-app.tar.gz  # Upload the compressed archive instead of the directory
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v2
+        with:
+          name: frontend-app
+
+      - name: Deploy frontend to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'paperhub'
+          slot-name: 'Production'
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0CA1F20F535D4E95832381DDD648768C }}
+          package: $(github.workspace)/frontend-app.tar.gz

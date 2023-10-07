@@ -31,11 +31,8 @@ jobs:
           npm install
           npm run build
 
-      - name: Zip Release
-        uses: TheDoctor0/zip-release@0.6.1
-        with:
-          filename: release.zip
-          path: ./dist
+      - name: Create a zip file from the dist directory
+        run: tar -czvf release.zip -C ./dist .
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2

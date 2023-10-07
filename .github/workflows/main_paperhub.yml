@@ -47,38 +47,8 @@ jobs:
       - name: Pause for 10 seconds
         run: sleep 10  # Sleep for 10 seconds
 
-      - name: Create archive from the temporary directory
-        run: tar -czf frontend-app.tar.gz -C temp_frontend/ .
-
-      - name: Debug List contents of the directory after archive creation
-        run: |
-          ls -al
-          ls -al temp_frontend
-
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: frontend-app.tar.gz
-          path: frontend-app.tar.gz  # Upload the compressed archive instead of the directory
-
-      - name: Azure Login
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v2
-        with:
           name: frontend-app
-
-      - name: Debug List contents of the downloaded artifact
-        run: ls -al frontend-app
-
-      - name: Deploy frontend to Azure Web App
-        id: deploy-to-webapp
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: 'paperhub'
-          slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0CA1F20F535D4E95832381DDD648768C }}
-          package: $(github.workspace)/frontend-app.tar.gz
+          path: temp_frontend  # Upload the contents of the temporary directory

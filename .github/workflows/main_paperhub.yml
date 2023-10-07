@@ -29,7 +29,6 @@ jobs:
           npm run build
 
       # Zip the build directory
-      - uses: actions/checkout@v2
       - name: Zip Release
         uses: TheDoctor0/zip-release@0.6.1
         with:

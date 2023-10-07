@@ -29,11 +29,13 @@ jobs:
           npm run build
 
       # Zip the build directory
+      - uses: actions/checkout@v2
       - name: Zip Release
         uses: TheDoctor0/zip-release@0.6.1
         with:
           filename: release.zip
-          path: $WORKING_DIRECTORY/dist/*  # Use the working directory for the path
+          directory: $WORKING_DIRECTORY
+          path: dist/*  # Use the working directory for the path
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2

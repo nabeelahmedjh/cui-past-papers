@@ -50,8 +50,10 @@ jobs:
       - name: Create archive from the temporary directory
         run: tar -czf frontend-app.tar.gz -C temp_frontend/ .
 
-      - name: Debug: List contents of the directory after archive creation
-        run: ls -al
+      - name: Debug List contents of the directory after archive creation
+        run: |
+          ls -al
+          ls -al temp_frontend
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
@@ -69,7 +71,7 @@ jobs:
         with:
           name: frontend-app
 
-      - name: Debug: List contents of the downloaded artifact
+      - name: Debug List contents of the downloaded artifact
         run: ls -al frontend-app
 
       - name: Deploy frontend to Azure Web App

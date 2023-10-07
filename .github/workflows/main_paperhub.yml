@@ -38,7 +38,7 @@ jobs:
         run: mkdir temp_frontend
 
       - name: Copy frontend files to the temporary directory
-        run: cp -r --exclude=temp_frontend ./* ./temp_frontend/
+        run: rsync -av --exclude=temp_frontend ./ ./temp_frontend/
 
       - name: Pause for 10 seconds
         run: sleep 10  # Sleep for 10 seconds

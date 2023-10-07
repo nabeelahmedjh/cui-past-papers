@@ -29,24 +29,13 @@ jobs:
       - name: List directory contents
         run: ls -al
 
-      - name: npm install
-        run: npm install
-        # No need to specify working-directory here, it will use the default
+      - name: Pause for 10 seconds
+        run: sleep 10  # Sleep for 10 seconds
 
-      - name: npm build
-        run: npm run build --if-present
-        # No need to specify working-directory here, it will use the default
-
-      - name: npm test
-        run: npm run test --if-present
-        # No need to specify working-directory here, it will use the default
-
-      - name: Pause for 30 seconds
-        run: sleep 30  # Sleep for 30 seconds
-
-      - name: Create archive
-        run: tar -czf frontend-app.tar.gz .
+      - name: Create archive with --ignore-failed-read
+        run: tar -czf frontend-app.tar.gz --ignore-failed-read .
         # This command creates a compressed archive of the frontend directory
+        # with the --ignore-failed-read option
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2

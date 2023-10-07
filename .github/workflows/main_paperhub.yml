@@ -10,11 +10,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        shell: bash
-        working-directory: ./frontend/past-papers  # Set the default working directory to frontend/past-papers
-
     steps:
       - uses: actions/checkout@v2
 
@@ -29,13 +24,17 @@ jobs:
       - name: List directory contents
         run: ls -al
 
+      - name: Create temporary directory
+        run: mkdir temp_frontend
+
+      - name: Copy frontend files to the temporary directory
+        run: cp -r ./frontend/past-papers/* ./temp_frontend/
+
       - name: Pause for 10 seconds
         run: sleep 10  # Sleep for 10 seconds
 
-      - name: Create archive with --ignore-failed-read
-        run: tar -czf frontend-app.tar.gz --ignore-failed-read .
-        # This command creates a compressed archive of the frontend directory
-        # with the --ignore-failed-read option
+      - name: Create archive from the temporary directory
+        run: tar -czf frontend-app.tar.gz -C temp_frontend/ .
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2

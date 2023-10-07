@@ -33,14 +33,15 @@ jobs:
 
       - name: Create a zip file from the dist directory
         run: |
-          mkdir -p ./dist-zip
-          tar -czvf ./dist-zip/release.zip -C ./dist .
-        
+          mkdir -p ./frontend/past-papers/dist-zip
+          cd ./frontend/past-papers/dist
+          zip -r ../../dist-zip/release.zip .
+
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
           name: frontend-app
-          path: ./dist-zip
+          path: ./frontend/past-papers/dist-zip/release.zip
 
   deploy:
     runs-on: ubuntu-latest

@@ -41,6 +41,9 @@ jobs:
       - name: Copy frontend files to the temporary directory
         run: cp -r ./dist/* ./temp_frontend/
 
+      - name: Print contents of the temporary directory
+        run: ls -al ./temp_frontend
+
       - name: Pause for 10 seconds
         run: sleep 10  # Sleep for 10 seconds
 

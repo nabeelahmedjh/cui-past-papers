@@ -1,6 +1,3 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
 name: Build, Zip, and Deploy Frontend of Node.js app to Azure Web App - paperhub
 
 on:
@@ -13,9 +10,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        working-directory: ./frontend/past-papers  
+    env:
+      WORKING_DIRECTORY: ./frontend/past-papers  # Define the working directory environment variable
 
     steps:
       - name: Checkout code
@@ -28,17 +24,16 @@ jobs:
 
       - name: Install dependencies and build
         run: |
+          cd $WORKING_DIRECTORY  # Change to the working directory
           npm install
           npm run build
 
       # Zip the build directory
       - name: Zip Release
-        working-directory: ./frontend/past-papers  # Set working directory for this step
-        run: |
-          TheDoctor0/zip-release@0.6.1
-          with:
-            filename: release.zip
-            path: ./dist/*
+        uses: TheDoctor0/zip-release@0.6.1
+        with:
+          filename: release.zip
+          path: $WORKING_DIRECTORY/dist/*  # Use the working directory for the path
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
@@ -53,10 +48,6 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     
-    defaults:
-      run:
-        working-directory: ./frontend/past-papers  # Set the default working directory for the deploy job
-
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v2

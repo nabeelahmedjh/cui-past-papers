@@ -41,8 +41,12 @@ jobs:
         run: npm run test --if-present
         # No need to specify working-directory here, it will use the default
 
-      - name: Upload artifact for deployment job
+      - name: Create archive
+        run: tar -czf frontend-app.tar.gz .
+        # This command creates a compressed archive of the frontend directory
+
+      - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
           name: frontend-app
-          path: .
+          path: frontend-app.tar.gz  # Upload the compressed archive instead of the directory

@@ -40,7 +40,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: frontend-app
-          path: release.zip
+          path: ./frontend/past-papers/release.zip
 
   deploy:
     runs-on: ubuntu-latest

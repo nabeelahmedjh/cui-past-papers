@@ -20,28 +20,38 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        run: |
+          echo "Current working directory: $(pwd)"
 
       - name: Set up Node.js version
         uses: actions/setup-node@v2
         with:
           node-version: '18.x'
+        run: |
+          echo "Current working directory: $(pwd)"
 
       - name: Install dependencies and build
         run: |
+          echo "Current working directory: $(pwd)"
           npm install
           npm run build
 
-      - name: Create a zip file from the dist directory
+      # Zip the build directory
+      - name: Zip Release
+        uses: TheDoctor0/zip-release@0.6.1
+        with:
+          filename: release.zip
+          path: ./dist/*
         run: |
-          mkdir -p ./frontend/past-papers/dist-zip
-          cd ./frontend/past-papers/dist
-          zip -r ../../dist-zip/release.zip .
+          echo "Current working directory: $(pwd)"
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
           name: frontend-app
-          path: ./frontend/past-papers/dist-zip/release.zip
+          path: release.zip
+        run: |
+          echo "Current working directory: $(pwd)"
 
   deploy:
     runs-on: ubuntu-latest
@@ -59,6 +69,8 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: frontend-app
+        run: |
+          echo "Current working directory: $(pwd)"
 
       - name: Deploy frontend to Azure Web App
         uses: azure/webapps-deploy@v2
@@ -67,3 +79,5 @@ jobs:
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0CA1F20F535D4E95832381DDD648768C }}
           package: release.zip
+        run: |
+          echo "Current working directory: $(pwd)"

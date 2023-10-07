@@ -29,6 +29,11 @@ jobs:
       - name: List directory contents
         run: ls -al
 
+      - name: Install dependencies and build
+        run: |
+          npm install
+          npm run build
+
       - name: Create temporary directory
         run: mkdir temp_frontend
 

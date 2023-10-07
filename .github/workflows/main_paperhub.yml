@@ -44,11 +44,8 @@ jobs:
       - name: Print contents of the temporary directory
         run: ls -al ./temp_frontend
 
-      - name: Pause for 10 seconds
-        run: sleep 10  # Sleep for 10 seconds
-
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
           name: frontend-app
-          path: temp_frontend  # Upload the contents of the temporary directory
+          path: ${{ github.workspace }}/frontend/past-papers/temp_frontend  # Specify the full path from the project root

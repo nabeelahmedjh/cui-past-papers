@@ -41,6 +41,9 @@ jobs:
         run: npm run test --if-present
         # No need to specify working-directory here, it will use the default
 
+      - name: Pause for 30 seconds
+        run: sleep 30  # Sleep for 30 seconds
+
       - name: Create archive
         run: tar -czf frontend-app.tar.gz .
         # This command creates a compressed archive of the frontend directory

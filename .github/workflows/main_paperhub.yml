@@ -33,7 +33,7 @@ jobs:
         uses: TheDoctor0/zip-release@0.6.1
         with:
           filename: release.zip
-          directory: $WORKING_DIRECTORY
+          directory: ./frontend/past-papers
           path: dist/*  # Use the working directory for the path
 
       - name: Upload artifact for deployment job

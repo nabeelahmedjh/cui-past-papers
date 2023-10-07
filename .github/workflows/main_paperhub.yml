@@ -33,6 +33,7 @@ jobs:
 
       # Zip the build directory
       - name: Zip Release
+        working-directory: ./frontend/past-papers  # Set working directory for this step
         uses: TheDoctor0/zip-release@0.6.1
         with:
           filename: release.zip

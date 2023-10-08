@@ -1,4 +1,4 @@
-name: Build, Zip, and Deploy Frontend of Node.js app to Azure Web App - paperhub
+name:  Deploy Frontend to Azure Web App - paperhub
 
 on:
   push:

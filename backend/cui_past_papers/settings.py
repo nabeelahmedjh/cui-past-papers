@@ -11,6 +11,12 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import environ
+
+
+# Initialise environment variables
+env = environ.Env()
+environ.Env.read_env('.env.dev')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,17 +26,21 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-&e#i+8glcao%5na$yhd7pjmn+nd!v&wr(u2s!+%7g+^i+6k^xq'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG', default=False)
 
-ALLOWED_HOSTS = [
-    "*",
-    "localhost",
-    "inspiron.lan",
-    "myvelop.duckdns.org",
-]
+# print("=> Django is running in ",env('DJANGO_ENVIRONMENT'))
+
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
+
+
+# defined cors allowed origins
+CORS_ALLOWED_ORIGINS = env.list('CORS_ALLOWED_ORIGINS')
+
+CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS')
+
 
 
 # Application definition
@@ -87,10 +97,22 @@ WSGI_APPLICATION = 'cui_past_papers.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': env('DATABASE_NAME'),
+        'USER': env('DATABASE_USER'),
+        'PASSWORD': env('DATABASE_PASS'),
+        'HOST': env('DATABASE_HOST'),
+        'PORT': env('DATABASE_PORT'),
     }
 }
 
@@ -153,12 +175,3 @@ REST_FRAMEWORK = {
 
 
 
-# defined cors allowed origins
-CORS_ALLOWED_ORIGINS = [
-    "https://domain.com",
-    "http://localhost:5173",
-    "http://myvelop.duckdns.org:5173",
-    "http://inspiron.lan:5173",
-    "http://127.0.0.1",
-
-]

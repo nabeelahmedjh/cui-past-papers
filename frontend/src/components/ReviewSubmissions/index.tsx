@@ -83,20 +83,14 @@ export default function ReviewSubmissions() {
       const submissionId = submissions[displayedSubmissionIndex]?.id;
       if (submissionId) {
         try {
-          console.log(`Submission with ID ${submissionId} pending processing`);
-
           const response = await axios.delete(`/submissions/${submissionId}`, {
             headers: {
               Authorization: `Token ${authToken}`,
             },
           });
           if (response.status < 300 && response.status >= 200) {
-            console.log(
-              `Submission with ID ${submissionId} deleted successfully`
-            );
             toast.success("Submission Deleted!");
           } else {
-            console.log(`Failed to delete submission with ID ${submissionId}`);
             toast.error("Error occurred while processing submission.");
           }
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -135,16 +129,12 @@ export default function ReviewSubmissions() {
       if (submissionId) {
         setIsSubmitting(true);
         try {
-          console.log("Form data:", formData);
-
           const response = await axios.post("/past-papers/", formData, {
             headers: {
               Authorization: `Token ${authToken}`,
             },
           });
-          console.log(response.data);
           if (response.status >= 200 && response.status < 300) {
-            console.log("Form submitted successfully");
             toast.success("Submission Accepted!");
             // await delSubmission();
             fetchSubmissions();
@@ -165,7 +155,6 @@ export default function ReviewSubmissions() {
             // Redirect to the login page
             navigate("/sensei");
           } else {
-            console.log("Form submission failed:", error.response.data);
             toast.error("Something went wrong, try again!");
           }
         }

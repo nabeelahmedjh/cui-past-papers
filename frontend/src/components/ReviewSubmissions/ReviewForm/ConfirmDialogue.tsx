@@ -29,12 +29,9 @@ export default function ConfirmDialogue({
   isSubmitting: boolean;
 }) {
   const [open, setOpen] = useState(false);
-  // console.log("Dialogue open: ", open);
 
   useEffect(() => {
-    // console.log("isDialogueOpen from useeffect", isDialogueOpen);
     if (isDialogueOpen) {
-      // console.log("dialogue use effect");
       setOpen(false);
     }
   }, [isDialogueOpen]);

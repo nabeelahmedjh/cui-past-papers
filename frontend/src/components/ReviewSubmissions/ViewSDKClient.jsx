@@ -102,8 +102,7 @@ class ViewSDKClient {
 
   registerSaveApiHandler() {
     /* Define Save API Handler */
-    const saveApiHandler = (metaData, content, options) => {
-      console.log(metaData, content, options);
+    const saveApiHandler = (metaData) => {
       return new Promise((resolve) => {
         /* Dummy implementation of Save API, replace with your business logic */
         setTimeout(() => {
@@ -133,9 +132,7 @@ class ViewSDKClient {
       /* Type of call back */
       window.AdobeDC.View.Enum.CallbackType.EVENT_LISTENER,
       /* call back function */
-      (event) => {
-        console.log(event);
-      },
+      () => {},
       /* options to control the callback execution */
       {
         /* Enable PDF analytics events on user interaction. */

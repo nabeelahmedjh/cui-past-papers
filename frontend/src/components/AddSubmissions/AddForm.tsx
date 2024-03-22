@@ -48,7 +48,6 @@ export default function AddForm() {
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
     event.target.classList.remove("bg-accent");
-    console.log(event.target.files?.[0]);
     setSelectedFile(event.target.files?.[0]);
   };
 
@@ -59,11 +58,9 @@ export default function AddForm() {
       formData.append("email", values.email);
       formData.append("linkedIn", values.linkedIn);
       formData.append("file", selectedFile);
-      console.log("Form Values: ", formData);
       try {
         setIsSubmitting(true);
         const response = await axios.post("/submissions/", formData);
-        console.log("Server Response: ", response.data);
         setIsSubmitting(false);
         if (response.status === 201) {
           // alert(
@@ -79,7 +76,6 @@ export default function AddForm() {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
         setIsSubmitting(false);
-        console.log("Error uploading form:", error);
 
         if (error.response.status === 400) {
           const errorMessage: string = error.response.data

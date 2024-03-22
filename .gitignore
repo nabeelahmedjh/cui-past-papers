@@ -18,4 +18,9 @@ backend/media/
 *.pdf
 *.lock
 
+#backend environment file
 
+.env
+.env.dev
+.env.prod
+.env.prod.db

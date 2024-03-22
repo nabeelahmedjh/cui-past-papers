@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      WORKING_DIRECTORY: ./frontend/past-papers # Define the working directory environment variable
+      WORKING_DIRECTORY: ./frontend # Define the working directory environment variable
 
     steps:
       - name: Checkout code
@@ -33,14 +33,14 @@ jobs:
         uses: TheDoctor0/zip-release@0.6.1
         with:
           filename: release.zip
-          directory: ./frontend/past-papers
+          directory: ./frontend
           path: dist/* # Use the working directory for the path
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
           name: frontend-app
-          path: ./frontend/past-papers/release.zip
+          path: ./frontend/release.zip
 
   deploy:
     runs-on: ubuntu-latest

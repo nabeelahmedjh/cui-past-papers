@@ -49,7 +49,6 @@ export default function Login() {
       const response = await axios.post("/login/", formData);
       if (response.status === 200) {
         const authToken = response.data.token;
-        console.log("Auth Token:", authToken);
 
         // Save the authentication token as a session cookie (expires when the browser is closed)
         Cookies.set("authToken", authToken);
@@ -65,7 +64,6 @@ export default function Login() {
       }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-      console.log("Form submission failed:", error.response.data);
       setError("Invalid username or password."); // Set the error message
     }
     setIsSubmitting(false);

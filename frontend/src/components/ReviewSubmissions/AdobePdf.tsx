@@ -14,7 +14,6 @@ function AdobePDF({ url }: { url: string }) {
         },
         url
       );
-      // console.log(url);
     });
   }, [url]);
 

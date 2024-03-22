@@ -49,33 +49,21 @@ This GitHub repository serves as the codebase and documentation for the CUI Past
 
 For first time setup of the frontend run
 
-`cd frontend/pat-papers`
+`cd frontend`
 
 `npm install`
 
-For the production build, you will use a different server URL and generate a new client id from Adobe for that domain when deploying
-Also, note that your env files are not added to the repo for security reasons.
+For the production build, you will use a different server URL and generate a new client id from Adobe for that domain when deploying.
 
-creat files `.env.development` for local build and `.env.production` for production build in `frontend\past-papers\` (project root)
-
-add the below variables to them
+modify the .env files with .sample at the end and remove .sample from the file name.
 
 generate your client id from [click Here](https://acrobatservices.adobe.com/dc-integration-creation-app-cdn/main.html?api=pdf-embed-api)
 if you are going to access the server using localhost, enter localhost in the domain when asked by Adobe to make a client id for localhost
 
-```
-
-#for localhost only
-VITE_ADOBE_PDF_CLIENT_ID = 81092c79fac91f6
-
-#django development server URL local
-VITE_DJANGO_SERVER_URL = http://localhost:8000
-
-```
 
 Then everytime you need to run server use
 
-`cd frontend/pat-papers`
+`cd frontend`
 
 `npm run dev`
 

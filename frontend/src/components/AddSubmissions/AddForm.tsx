@@ -41,7 +41,7 @@ export default function AddForm() {
       name: "",
       email: "",
       linkedIn: "",
-      file: null,
+      file: undefined,
     },
   });
 
@@ -91,7 +91,7 @@ export default function AddForm() {
         name: values.name,
         email: values.email,
         linkedIn: values.linkedIn,
-        file: null,
+        file: undefined,
       });
     }
   }
@@ -159,16 +159,21 @@ export default function AddForm() {
             <FormField
               control={form.control}
               name="file"
-              render={({ field }) => (
+              render={({ field: { onChange, onBlur, name, ref } }) => (
                 <FormItem>
-                  <FormLabel>Upload PDF</FormLabel>
+                  <FormLabel>Past Paper</FormLabel>
                   <FormControl>
                     <Input
                       className="cursor-pointer file:text-transparent file:absolute before:pb-[5%] h-52 pl-[20%] pt-[5%] before:w-24 before:ml-[20%] before:content-uploadIcon after:text-primary after:mt-2 after:content-['Drag_&_drop_your_files_or_Browse'] "
                       type="file"
                       accept="application/pdf"
-                      {...field}
-                      onChange={handleFileChange}
+                      name={name}
+                      onBlur={onBlur}
+                      onChange={(e) => {
+                        onChange(e.target?.files?.[0]); // Call the original onChange from field object
+                        handleFileChange(e); // Call your custom file change handler
+                      }}
+                      ref={ref}
                       onDragOver={(e) => {
                         e.preventDefault();
                         const target = e.target as HTMLInputElement;
@@ -181,9 +186,7 @@ export default function AddForm() {
                       }}
                     />
                   </FormControl>
-                  <FormDescription>
-                    Only PDF files are accepted and max file size is 30MB
-                  </FormDescription>
+                  <FormDescription>Upload your past paper file</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}

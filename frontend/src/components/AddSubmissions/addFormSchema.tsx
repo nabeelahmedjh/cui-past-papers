@@ -1,7 +1,6 @@
 import * as z from "zod";
 
-// const MAX_FILE_SIZE = 30;
-// const ACCEPTED_IMAGE_TYPES = ["application/pdf"];
+const MAX_FILE_SIZE_MB = 5;
 
 export const addFormSchema = z.object({
   name: z
@@ -17,14 +16,17 @@ export const addFormSchema = z.object({
     .string()
     .url("Please enter a valid URL.")
     .regex(/\blinkedin\b/, "Only LinkedIn profiles are accepted"),
-  file: z.any(),
-  // .refine((files) => files?.length == 0, "File is required.")
-  // .refine(
-  //   (files) => files?.[0]?.size <= MAX_FILE_SIZE,
-  //   `Max file size is 30MB.`
-  // )
-  // .refine(
-  //   (files) => ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
-  //   "Only PDF is accepted"
-  // ),
+  file: z
+    .union([z.instanceof(File), z.undefined()])
+    .refine((file) => file !== undefined, "File is required.")
+    .refine(
+      (file) =>
+        file === undefined || file.size <= MAX_FILE_SIZE_MB * 1024 * 1024,
+      {
+        message: `File size must be less than ${MAX_FILE_SIZE_MB}MB.`,
+      }
+    )
+    .refine((file) => file === undefined || file.type === "application/pdf", {
+      message: "Only PDF files are allowed.",
+    }),
 });
